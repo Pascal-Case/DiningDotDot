@@ -1,4 +1,4 @@
-package jyang.diningdotdot.user;
+package jyang.diningdotdot.entity.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

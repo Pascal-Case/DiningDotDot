@@ -1,10 +1,10 @@
-package jyang.diningdotdot.store;
+package jyang.diningdotdot.entity.store;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jyang.diningdotdot.common.BaseEntity;
+import jyang.diningdotdot.entity.common.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

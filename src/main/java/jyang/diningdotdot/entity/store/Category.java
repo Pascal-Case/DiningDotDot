@@ -1,15 +1,19 @@
-package jyang.diningdotdot.user;
+package jyang.diningdotdot.entity.store;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
-import lombok.Getter;
+import jyang.diningdotdot.entity.common.BaseEntity;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @EntityListeners(AuditingEntityListener.class)
-public class Admin extends User {
+public class Category extends BaseEntity {
 
+    private String name;
 }

@@ -1,11 +1,11 @@
-package jyang.diningdotdot.review;
+package jyang.diningdotdot.entity.review;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
-import jyang.diningdotdot.common.BaseEntity;
-import jyang.diningdotdot.reservation.Reservation;
+import jyang.diningdotdot.entity.common.BaseEntity;
+import jyang.diningdotdot.entity.reservation.Reservation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

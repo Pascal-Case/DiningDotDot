@@ -1,4 +1,4 @@
-package jyang.diningdotdot.common;
+package jyang.diningdotdot.entity.common;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EntityListeners;

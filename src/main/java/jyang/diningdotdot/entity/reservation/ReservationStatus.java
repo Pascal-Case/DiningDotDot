@@ -1,4 +1,4 @@
-package jyang.diningdotdot.reservation;
+package jyang.diningdotdot.entity.reservation;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

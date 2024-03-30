@@ -1,9 +1,9 @@
-package jyang.diningdotdot.store;
+package jyang.diningdotdot.entity.store;
 
 import jakarta.persistence.*;
-import jyang.diningdotdot.common.Address;
-import jyang.diningdotdot.common.BaseEntity;
-import jyang.diningdotdot.user.Partner;
+import jyang.diningdotdot.entity.common.Address;
+import jyang.diningdotdot.entity.common.BaseEntity;
+import jyang.diningdotdot.entity.user.Partner;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 

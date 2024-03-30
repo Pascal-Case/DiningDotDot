@@ -1,9 +1,9 @@
-package jyang.diningdotdot.user;
+package jyang.diningdotdot.entity.user;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jyang.diningdotdot.common.Address;
-import jyang.diningdotdot.common.BaseEntity;
+import jyang.diningdotdot.entity.common.Address;
+import jyang.diningdotdot.entity.common.BaseEntity;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 

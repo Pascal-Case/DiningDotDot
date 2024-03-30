@@ -1,8 +1,8 @@
-package jyang.diningdotdot.reservation;
+package jyang.diningdotdot.entity.reservation;
 
 import jakarta.persistence.*;
-import jyang.diningdotdot.common.BaseEntity;
-import jyang.diningdotdot.user.User;
+import jyang.diningdotdot.entity.common.BaseEntity;
+import jyang.diningdotdot.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,10 +1,10 @@
-package jyang.diningdotdot.user;
+package jyang.diningdotdot.entity.user;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.OneToMany;
-import jyang.diningdotdot.store.Store;
+import jyang.diningdotdot.entity.store.Store;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Partner extends User {
-    
+
     @OneToMany(mappedBy = "partner", cascade = CascadeType.ALL)
     private List<Store> stores;
 
