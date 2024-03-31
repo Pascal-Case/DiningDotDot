@@ -11,6 +11,14 @@ spring:
     open-in-view: false
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
         show-sql: true
         format_sql: true
+  mustache:
+    charset: UTF-8
+    servlet:
+      expose-request-attributes: true
+server:
+  servlet:
+    encoding:
+      force-response: true
+      charset: UTF-8

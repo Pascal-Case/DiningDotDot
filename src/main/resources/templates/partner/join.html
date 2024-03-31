@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create User</title>
+</head>
+<body>
+<h1>파트너 가입</h1>
+<form action="/partner/joinProc" method="post" th:action="@{/partner/joinProc}" th:object="${joinForm}"
+      name="joinPartnerForm">
+
+    <!-- username(email) 필드 -->
+    <label for="username">ID:</label>
+    <input type="email" id="username" name="username" th:field="*{username}" required>
+    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red;"></div>
+    <br><br>
+
+    <!-- 이름 필드 -->
+    <label for="name">이름:</label>
+    <input type="text" id="name" name="name" th:field="*{name}" required>
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red;"></div>
+    <br><br>
+
+    <!-- 비밀번호 필드 -->
+    <label for="password">비밀번호:</label>
+    <input type="password" id="password" name="password" th:field="*{password}" required minlength="8">
+    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red;"></div>
+    <br><br>
+
+    <!-- 전화번호 필드 -->
+    <label for="phone">전화번호:</label>
+    <input type="tel" id="phone" name="phone" th:field="*{phone}" required pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}">
+    <div th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" style="color: red;"></div>
+    <br><br>
+
+    <!-- 우편번호 필드 -->
+    <label for="zipcode">우편번호:</label>
+    <input type="text" id="zipcode" name="zipcode" th:field="*{zipcode}">
+    <div th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}" style="color: red;"></div>
+    <br><br>
+
+    <!-- 시 필드 -->
+    <label for="city">시:</label>
+    <input type="text" id="city" name="city" th:field="*{city}">
+    <div th:if="${#fields.hasErrors('city')}" th:errors="*{city}" style="color: red;"></div>
+    <br><br>
+
+    <!-- 도로명 필드 -->
+    <label for="street">도로명:</label>
+    <input type="text" id="street" name="street" th:field="*{street}">
+    <div th:if="${#fields.hasErrors('street')}" th:errors="*{street}" style="color: red;"></div>
+    <br><br>
+
+    <input type="submit" value="Join">
+</form>
+<a href="/">HOME</a>
+</body>
+</html>

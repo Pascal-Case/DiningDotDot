@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Create User</title>
+</head>
+<body>
+<h1>HOME</h1>
+
+<div th:if="${id != null}">
+    <p><strong>ID:</strong> <span th:text="${id}">User ID</span></p>
+    <p><strong>Role:</strong> <span th:text="${role}">User Role</span></p>
+    <p><strong>Name:</strong> <span th:text="${name}">User Name</span></p>
+</div>
+
+<br><br>
+<a href="/oauth2/authorization/naver">naver login</a><br>
+<a href="/oauth2/authorization/google">google login</a><br>
+<a href="/login">이메일 로그인</a>
+<br><br>
+<a href="/user/join">일반회원 가입</a>
+<br><br>
+<a href="/partner/join">파트너 가입</a> | <a href="/login">파트너 로그인</a>
+<br><br>
+<a href="/logout">로그아웃</a>
+</body>
+</html>
+</html>

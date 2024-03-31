@@ -1,39 +1,22 @@
 package jyang.diningdotdot.entity.user;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jyang.diningdotdot.entity.common.Address;
-import jyang.diningdotdot.entity.common.BaseEntity;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@Builder
+@NoArgsConstructor
+@SuperBuilder
 @EntityListeners(AuditingEntityListener.class)
-public class User extends BaseEntity {
-    @Column(unique = true)
-    private String username;
-
-    private String nickname;
-
-    private String name;
-
-    @Column(nullable = false)
-    private String password;
-
-    @Column(unique = true)
-    @Email
-    private String email;
-
-    private String phone;
-
+public class User extends BaseUser {
     @Enumerated(EnumType.STRING)
-    private Role role;
-
-    @Embedded
-    private Address address;
+    private AuthType authType;
+    private String provider;
+    private String providerId;
 }
