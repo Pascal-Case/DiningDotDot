@@ -39,7 +39,7 @@ public class CustomUserDetails implements UserDetails {
     public String getName() {
         return userEntity.getName();
     }
-    
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

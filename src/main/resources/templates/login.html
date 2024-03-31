@@ -6,6 +6,10 @@
 </head>
 <body>
 <h1>로그인</h1>
+
+<a href="/oauth2/authorization/naver">naver login</a><br>
+<a href="/oauth2/authorization/kakao">kakao login</a><br>
+
 <form action="/loginProc" method="post" th:object="${loginForm}" name="loginForm">
     <!-- Email 필드 -->
     <label for="username">이메일:</label>

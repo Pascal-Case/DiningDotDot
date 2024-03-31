@@ -1,5 +1,7 @@
 package jyang.diningdotdot.config;
 
+import jyang.diningdotdot.service.CustomOAuth2UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -11,7 +13,10 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -36,15 +41,22 @@ public class SecurityConfig {
                         .loginProcessingUrl("/loginProc")
                         .permitAll()
                 );
-        http.httpBasic(Customizer.withDefaults());
+        http
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login")
+                        .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig
+                                .userService(customOAuth2UserService)));
+
+        http.
+                httpBasic(Customizer.withDefaults());
 
         http.
                 csrf(AbstractHttpConfigurer::disable);
 
         http.
                 sessionManagement(auth -> auth
-                        .maximumSessions(1) // 최대 동시 로그인 수
-                        .maxSessionsPreventsLogin(true)); // true -> 새 로그인 차단, false -> 기존 세션 하나 삭제
+                        .maximumSessions(3) // 최대 동시 로그인 수
+                        .maxSessionsPreventsLogin(false)); // true -> 새 로그인 차단, false -> 기존 세션 하나 삭제
 
         http.
                 sessionManagement(auth -> auth
