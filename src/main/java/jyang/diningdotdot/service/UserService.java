@@ -1,6 +1,7 @@
 package jyang.diningdotdot.service;
 
-import jyang.diningdotdot.dto.joinForm;
+import jakarta.persistence.EntityNotFoundException;
+import jyang.diningdotdot.dto.common.JoinForm;
 import jyang.diningdotdot.entity.user.AuthType;
 import jyang.diningdotdot.entity.user.User;
 import jyang.diningdotdot.repository.UserRepository;
@@ -19,7 +20,7 @@ public class UserService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Transactional
-    public void joinProcess(joinForm joinForm) {
+    public void joinProcess(JoinForm joinForm) {
         if (userRepository.existsByUsername(joinForm.getUsername())) {
             throw new RuntimeException("존재하는 메일 주소");
         }
@@ -39,6 +40,6 @@ public class UserService {
 
     private User getPartner(String username) {
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("user not found"));
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 }

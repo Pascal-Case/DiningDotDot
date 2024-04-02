@@ -8,9 +8,10 @@
 <h1>파트너 가입</h1>
 <form action="/partner/joinProc" method="post" th:action="@{/partner/joinProc}" th:object="${joinForm}"
       name="joinPartnerForm">
-
+    <!-- csrf 토큰 -->
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
     <!-- username(email) 필드 -->
-    <label for="username">ID:</label>
+    <label for="username">이메일:</label>
     <input type="email" id="username" name="username" th:field="*{username}" required>
     <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red;"></div>
     <br><br>

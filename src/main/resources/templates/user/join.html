@@ -8,7 +8,7 @@
 <h1>Create User</h1>
 <form action="/user/joinProc" method="post" th:action="@{/user/joinProc}" th:object="${joinForm}"
       name="joinPartnerForm">
-
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
     <!-- username(email) 필드 -->
     <label for="username">ID:</label>
     <input type="email" id="username" name="username" th:field="*{username}" required>

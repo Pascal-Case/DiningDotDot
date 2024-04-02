@@ -1,7 +1,7 @@
 package jyang.diningdotdot.controller;
 
 import jakarta.validation.Valid;
-import jyang.diningdotdot.dto.joinForm;
+import jyang.diningdotdot.dto.common.JoinForm;
 import jyang.diningdotdot.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -20,19 +20,19 @@ public class UserController {
 
     @GetMapping("/join")
     public String joinPage(Model model) {
-        model.addAttribute("joinForm", new joinForm());
-        return "/user/join";
+        model.addAttribute("joinForm", new JoinForm());
+        return "user/join";
     }
 
     @PostMapping("/joinProc")
     public String joinProcess(
-            @ModelAttribute @Valid joinForm joinForm,
+            @ModelAttribute @Valid JoinForm joinForm,
             BindingResult result) {
         if (result.hasErrors()) {
-            return "/user/join";
+            return "user/join";
         }
         userService.joinProcess(joinForm);
-        return "redirect:login";
+        return "redirect:/login";
     }
 
 

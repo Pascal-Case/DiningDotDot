@@ -6,7 +6,6 @@ import jyang.diningdotdot.entity.common.Address;
 import jyang.diningdotdot.entity.common.BaseEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -15,7 +14,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @SuperBuilder
-@EntityListeners(AuditingEntityListener.class)
 public class BaseUser extends BaseEntity {
     @Column(unique = true)
     @Email

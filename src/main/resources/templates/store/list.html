@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Store List</title>
+    <style>
+        /* 모달 스타일 */
+        .modal {
+            display: none; /* 모달 숨기기 */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4); /* 배경 색상과 투명도 조절 */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        /* 모달 닫기 버튼 스타일 */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<h1>Store List</h1>
+<button id="addStoreBtn">Add Store</button>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Description</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="store : ${storeList}">
+        <td th:text="${store.name}"></td>
+        <td th:text="${store.phone}"></td>
+        <td th:text="${store.description}"></td>
+        <td>
+            <a th:href="@{'/store/edit/' + ${store.id}}">매장 정보 수정</a> |
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+
+<div id="addStoreModal" class="modal">
+    <div class="modal-content">
+        <span id="closeAddStoreBtn" class="close">&times;</span>
+        <h2>Add Store</h2>
+        <form th:action="@{/store/register}" th:object="${storeDTO}" method="post">
+            <!-- csrf 토큰 -->
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+            <p><label for="name">Name:</label> <input type="text" id="name" th:field="*{name}"/></p>
+            <p><label for="categoryId">Category:</label>
+                <select id="categoryId" th:field="*{categoryId}">
+                    <option value="" disabled selected>Choose...</option>
+                    <option th:each="category : ${categories}"
+                            th:value="${category.id}"
+                            th:text="${category.name}">Category Name
+                    </option>
+                </select>
+            </p>
+            <p><label for="capacity">Capacity:</label> <input type="number" id="capacity" th:field="*{capacity}"
+                                                              min="1"/></p>
+            <p><label for="openTime">Open Time:</label> <input type="time" id="openTime" th:field="*{openTime}"/>
+            </p>
+            <p><label for="closeTime">Close Time:</label> <input type="time" id="closeTime"
+                                                                 th:field="*{closeTime}"/>
+            </p>
+            <p><label for="lastOrderTime">Last Order Time:</label> <input type="time" id="lastOrderTime"
+                                                                          th:field="*{lastOrderTime}"/></p>
+            <p><label for="phone">Phone:</label> <input type="text" id="phone" th:field="*{phone}"/></p>
+            <p><label for="description">Description:</label> <textarea id="description"
+                                                                       th:field="*{description}"></textarea></p>
+            <p><label for="city">City:</label> <input type="text" id="city" th:field="*{city}"/></p>
+            <p><label for="street">Street:</label> <input type="text" id="street" th:field="*{street}"/></p>
+            <p><label for="zipcode">Zipcode:</label> <input type="text" id="zipcode" th:field="*{zipcode}"/></p>
+            <p><input type="submit" value="Submit"/></p>
+        </form>
+    </div>
+</div>
+<a href="/">HOME</a>
+</body>
+
+<script>
+    const addStoreModal = document.getElementById('addStoreModal');
+    const addStoreBtn = document.getElementById('addStoreBtn');
+    const closeAddStoreBtn = document.getElementById('closeAddStoreBtn');
+
+    // 매장 추가 버튼 클릭 시 모달 표시
+    addStoreBtn.onclick = function () {
+        addStoreModal.style.display = 'block';
+    }
+
+    // 모달 닫기 버튼 클릭 시 모달 숨기기
+    closeAddStoreBtn.onclick = function () {
+        addStoreModal.style.display = 'none';
+    }
+
+    // 모달 외부 클릭 시 모달 숨기기
+    window.onclick = function (event) {
+        if (event.target === addStoreModal) {
+            addStoreModal.style.display = 'none';
+        }
+    }
+</script>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Store</title>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+<h1>Edit Store</h1>
+<button type="button" id="deleteButton" th:attr="data-store-id=${storeDTO.id}">Delete Store</button>
+<form th:action="@{/store/update}" th:object="${storeDTO}" method="post">
+    <!-- csrf 토큰 -->
+    <input type="hidden" th:field="*{id}"/>
+    <p><label for="name">Name:</label> <input type="text" id="name" th:field="*{name}"/></p>
+    <p><label for="categoryId">Category:</label>
+        <select id="categoryId" th:field="*{categoryId}">
+            <option value="" disabled selected>Choose...</option>
+            <option th:each="category : ${categories}"
+                    th:value="${category.id}"
+                    th:text="${category.name}">Category Name
+            </option>
+        </select>
+    </p>
+    <p><label for="capacity">Capacity:</label> <input type="number" id="capacity" th:field="*{capacity}"
+                                                      min="1"/></p>
+    <p><label for="openTime">Open Time:</label> <input type="time" id="openTime" th:field="*{openTime}"/>
+    </p>
+    <p><label for="closeTime">Close Time:</label> <input type="time" id="closeTime"
+                                                         th:field="*{closeTime}"/>
+    </p>
+    <p><label for="lastOrderTime">Last Order Time:</label> <input type="time" id="lastOrderTime"
+                                                                  th:field="*{lastOrderTime}"/></p>
+    <p><label for="phone">Phone:</label> <input type="text" id="phone" th:field="*{phone}"/></p>
+    <p><label for="description">Description:</label> <textarea id="description"
+                                                               th:field="*{description}"></textarea></p>
+    <p><label for="city">City:</label> <input type="text" id="city" th:field="*{city}"/></p>
+    <p><label for="street">Street:</label> <input type="text" id="street" th:field="*{street}"/></p>
+    <p><label for="zipcode">Zipcode:</label> <input type="text" id="zipcode" th:field="*{zipcode}"/></p>
+    <p><input type="submit" value="Update"/></p>
+</form>
+
+<a href="/">HOME</a>
+
+</body>
+
+<script>
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+
+    document.getElementById('deleteButton').addEventListener('click', function () {
+        const storeId = this.getAttribute('data-store-id');
+
+        if (confirm('해당 매장을 삭제하시겠습니까?')) {
+            fetch(`/store/delete/${storeId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    [csrfHeader]: csrfToken,
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('매장을 성공적으로 삭제하였습니다.');
+                        window.location.href = '/store/list';
+                    } else {
+                        alert('매장을 삭제하는 도중 에러가 발생했습니다.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    });
+</script>
+</html>

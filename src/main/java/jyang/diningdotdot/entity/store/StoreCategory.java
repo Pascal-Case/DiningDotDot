@@ -1,19 +1,19 @@
 package jyang.diningdotdot.entity.store;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
 import jyang.diningdotdot.entity.common.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 
 @Entity
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EntityListeners(AuditingEntityListener.class)
-public class Category extends BaseEntity {
+public class StoreCategory extends BaseEntity {
 
     private String name;
 }
