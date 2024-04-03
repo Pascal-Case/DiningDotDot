@@ -5,11 +5,12 @@
     <title>Edit Store</title>
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" th:href="@{/css/general.css}"/>
 </head>
 <body>
 <h1>Edit Store</h1>
 <button type="button" id="deleteButton" th:attr="data-store-id=${storeDTO.id}">Delete Store</button>
-<form th:action="@{/store/update}" th:object="${storeDTO}" method="post">
+<form th:action="@{/templates/stores/update}" th:object="${storeDTO}" method="post">
     <!-- csrf 토큰 -->
     <input type="hidden" th:field="*{id}"/>
     <p><label for="name">Name:</label> <input type="text" id="name" th:field="*{name}"/></p>
@@ -40,7 +41,7 @@
     <p><input type="submit" value="Update"/></p>
 </form>
 
-<a href="/">HOME</a>
+<a href="/static">HOME</a>
 
 </body>
 

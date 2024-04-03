@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/partner")
+@RequestMapping("/partners")
 @RequiredArgsConstructor
 public class PartnerController {
 
@@ -22,7 +22,7 @@ public class PartnerController {
     @GetMapping("/join")
     public String joinPage(Model model) {
         model.addAttribute("joinForm", new JoinForm());
-        return "partner/join";
+        return "partners/join";
     }
 
     @PostMapping("/joinProc")
@@ -30,7 +30,7 @@ public class PartnerController {
             @ModelAttribute @Valid JoinForm joinForm,
             BindingResult result) {
         if (result.hasErrors()) {
-            return "partner/join";
+            return "partners/join";
         }
         partnerService.joinProcess(joinForm);
         return "redirect:/login";

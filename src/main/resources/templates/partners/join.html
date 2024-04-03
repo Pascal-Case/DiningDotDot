@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Create User</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}"/>
 </head>
 <body>
 <h1>파트너 가입</h1>
-<form action="/partner/joinProc" method="post" th:action="@{/partner/joinProc}" th:object="${joinForm}"
+<form action="/partners/joinProc" method="post" th:action="@{/partners/joinProc}" th:object="${joinForm}"
       name="joinPartnerForm">
     <!-- csrf 토큰 -->
     <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>

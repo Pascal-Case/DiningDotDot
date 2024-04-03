@@ -3,6 +3,7 @@ package jyang.diningdotdot.service;
 import jakarta.persistence.EntityNotFoundException;
 import jyang.diningdotdot.config.AuthenticationFacade;
 import jyang.diningdotdot.dto.store.StoreDTO;
+import jyang.diningdotdot.dto.store.StoreListDTO;
 import jyang.diningdotdot.entity.store.Store;
 import jyang.diningdotdot.entity.store.StoreCategory;
 import jyang.diningdotdot.entity.user.Partner;
@@ -10,6 +11,9 @@ import jyang.diningdotdot.repository.PartnerRepository;
 import jyang.diningdotdot.repository.StoreCategoryRepository;
 import jyang.diningdotdot.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,8 +67,16 @@ public class StoreService {
     public List<Store> findStoreListByCurrentPartner() {
         String currentPartnerUsername = authenticationFacade.getCurrentUsername();
         Partner partner = getPartner(currentPartnerUsername);
-        System.out.println("partner = " + partner);
+        System.out.println("partners = " + partner);
         return storeRepository.findByPartner(partner);
+    }
+
+    public Slice<StoreListDTO> getStoreSlice(Pageable pageable) {
+        Slice<Store> storeSlice = storeRepository.findAll(pageable);
+        List<StoreListDTO> storeList = storeSlice.getContent().stream()
+                .map(StoreListDTO::fromEntity)
+                .toList();
+        return new SliceImpl<>(storeList, pageable, storeSlice.hasNext());
     }
 
 

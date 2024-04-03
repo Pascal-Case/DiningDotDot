@@ -1,4 +1,4 @@
-package jyang.diningdotdot.controller;
+package jyang.diningdotdot.controller.store;
 
 import jakarta.validation.Valid;
 import jyang.diningdotdot.dto.store.StoreDTO;
@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/store")
-public class StoreController {
-
+@RequestMapping("/partners")
+public class PartnerStoreController {
     private final StoreCategoryRepository storeCategoryRepository;
     private final StoreService storeService;
 
@@ -24,7 +23,7 @@ public class StoreController {
         model.addAttribute("storeList", storeService.findStoreListByCurrentPartner());
         model.addAttribute("storeDTO", new StoreDTO());
         model.addAttribute("categories", storeCategoryRepository.findAll());
-        return "store/list";
+        return "partners/myStoreList";
     }
 
     @PostMapping("/register")
@@ -33,10 +32,10 @@ public class StoreController {
             BindingResult result
     ) {
         if (result.hasErrors()) {
-            return "store/list";
+            return "partners/myStoreList";
         }
         storeService.registerStore(storeDTO);
-        return "redirect:list";
+        return "redirect:myStoreList";
     }
 
     @GetMapping("/edit/{id}")
@@ -45,11 +44,11 @@ public class StoreController {
             Model model) {
         StoreDTO store = storeService.getStoreDtoById(id);
         if (store == null) {
-            return "redirect:list";
+            return "redirect:myStoreList";
         }
         model.addAttribute("storeDTO", store);
         model.addAttribute("categories", storeCategoryRepository.findAll());
-        return "store/edit";
+        return "partners/editStore";
     }
 
     @PostMapping("/update")
@@ -57,7 +56,7 @@ public class StoreController {
             @ModelAttribute StoreDTO storeDTO
     ) {
         storeService.updateStore(storeDTO);
-        return "redirect:list";
+        return "redirect:myStoreList";
     }
 
     @DeleteMapping("/delete/{id}")

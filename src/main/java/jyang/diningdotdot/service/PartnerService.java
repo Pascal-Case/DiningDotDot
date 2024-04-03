@@ -38,6 +38,6 @@ public class PartnerService {
 
     private Partner getPartner(String username) {
         return partnerRepository.findByUsername(username)
-                .orElseThrow(() -> new EntityNotFoundException("user not found"));
+                .orElseThrow(() -> new EntityNotFoundException("users not found"));
     }
 }

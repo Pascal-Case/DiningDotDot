@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Create User</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}" />
 </head>
 <body>
 <h1>HOME</h1>
@@ -16,15 +17,17 @@
 <br><br>
 <a href="/login">로그인</a>
 <br><br>
-<a href="/user/join">일반회원 가입</a>
+<a href="/users/join">일반회원 가입</a>
 <br><br>
-<a href="/partner/join">파트너 가입</a> | <a href="/login">파트너 로그인</a>
+<a href="/partners/join">파트너 가입</a> | <a href="/login">파트너 로그인</a>
 <br><br>
 <a href="/logout">로그아웃</a>
 
 <hr>
 
-<a href="store/list">관리 매장 목록</a>
+<a href="/stores">전체 매장 목록</a>
+
+<a href="/partners/stores">관리 매장 목록</a>
 
 </body>
 </html>

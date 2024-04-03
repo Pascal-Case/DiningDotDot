@@ -4,9 +4,9 @@ import jyang.diningdotdot.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -27,11 +27,12 @@ public class SecurityConfig {
 
         http.
                 authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login",
-                                "/user/login", "/user/join", "/user/joinProc",
-                                "/partner/login", "/partner/join", "/partner/joinProc").permitAll()
+                        .requestMatchers("/", "/login", "/main/**", "stores/**",
+                                "/users/join", "/users/joinProc",
+                                "/partners/join", "/partners/joinProc").permitAll()
+                        .requestMatchers("/js/**", "/css/**", "/img/**").permitAll() // 정적 파일
                         .requestMatchers("/admin").hasRole("ADMIN")
-                        .requestMatchers("/my/**").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers("/reservation/**").hasAnyRole("ADMIN", "USER")
                         .anyRequest().authenticated() // 그외 경로는 로그인 사용자만 허용
                 );
         http.
@@ -47,7 +48,7 @@ public class SecurityConfig {
                                 .userService(customOAuth2UserService)));
 
         http.
-                httpBasic(Customizer.withDefaults());
+                httpBasic((AbstractHttpConfigurer::disable));
 
 //        http.
 //                csrf(AbstractHttpConfigurer::disable);

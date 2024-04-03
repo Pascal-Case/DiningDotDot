@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
 
     @GetMapping("/join")
     public String joinPage(Model model) {
         model.addAttribute("joinForm", new JoinForm());
-        return "user/join";
+        return "users/join";
     }
 
     @PostMapping("/joinProc")
@@ -29,7 +29,7 @@ public class UserController {
             @ModelAttribute @Valid JoinForm joinForm,
             BindingResult result) {
         if (result.hasErrors()) {
-            return "user/join";
+            return "users/join";
         }
         userService.joinProcess(joinForm);
         return "redirect:/login";
