@@ -1,6 +1,5 @@
 package jyang.diningdotdot.dto.store;
 
-import jyang.diningdotdot.entity.common.Address;
 import jyang.diningdotdot.entity.store.Store;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,13 +24,6 @@ public class StoreListDTO {
     private LocalTime lastOrderTime;
     private String phone;
     private String description;
-    private String city;
-    private String street;
-    private String zipcode;
-
-    public Address toAddress() {
-        return new Address(city, street, zipcode);
-    }
 
     public static StoreListDTO fromEntity(Store store) {
         return StoreListDTO.builder()
@@ -44,9 +36,6 @@ public class StoreListDTO {
                 .lastOrderTime(store.getLastOrderTime())
                 .phone(store.getPhone())
                 .description(store.getDescription())
-                .city(store.getAddress().getCity())
-                .street(store.getAddress().getStreet())
-                .zipcode(store.getAddress().getZipcode())
                 .build();
     }
 }

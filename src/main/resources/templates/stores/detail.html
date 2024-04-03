@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}"/>
+</head>
+<body>
+<div>
+    <h2>Store Information</h2>
+    <p><strong>Name:</strong> <span th:text="${storeDetail.storeListDTO.name}"></span></p>
+    <p><strong>Category:</strong> <span th:text="${storeDetail.storeListDTO.categoryName}"></span></p>
+    <p><strong>Capacity:</strong> <span th:text="${storeDetail.storeListDTO.capacity}"></span></p>
+    <p><strong>Open Time:</strong> <span th:text="${storeDetail.storeListDTO.openTime}"></span></p>
+    <p><strong>Close Time:</strong> <span th:text="${storeDetail.storeListDTO.closeTime}"></span></p>
+    <p><strong>Last Order Time:</strong> <span th:text="${storeDetail.storeListDTO.lastOrderTime}"></span></p>
+    <p><strong>Phone:</strong> <span th:text="${storeDetail.storeListDTO.phone}"></span></p>
+    <p><strong>Description:</strong> <span th:text="${storeDetail.storeListDTO.description}"></span></p>
+
+    <h2>Location Information</h2>
+    <p><strong>City:</strong> <span th:text="${storeDetail.city}"></span></p>
+    <p><strong>Street:</strong> <span th:text="${storeDetail.street}"></span></p>
+    <p><strong>Zipcode:</strong> <span th:text="${storeDetail.zipcode}"></span></p>
+
+    <h2>Additional Information</h2>
+    <p><strong>Rating:</strong> <span th:text="${storeDetail.rating}"></span></p>
+
+    <!--    <button type="button" id="showReservationFormBtn">-->
+    <!--        예약하기-->
+    <!--    </button>-->
+
+    <!--    <div id="reservationFormModal" class="modal">-->
+    <!--        <span id="closeReservationFormBtn" class="close">&times;</span>-->
+    <!--        <h2>예약하기</h2>-->
+    <!--        <form th:action="@{/stores/reservation}" th:object="${reservationDTO}" method="post">-->
+
+    <!--        </form>-->
+    <!--    </div>-->
+</div>
+
+</body>
+</html>

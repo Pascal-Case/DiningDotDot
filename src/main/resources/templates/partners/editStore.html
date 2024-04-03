@@ -10,7 +10,7 @@
 <body>
 <h1>Edit Store</h1>
 <button type="button" id="deleteButton" th:attr="data-store-id=${storeDTO.id}">Delete Store</button>
-<form th:action="@{/templates/stores/update}" th:object="${storeDTO}" method="post">
+<form th:action="@{/partners/stores/update}" th:object="${storeDTO}" method="post">
     <!-- csrf 토큰 -->
     <input type="hidden" th:field="*{id}"/>
     <p><label for="name">Name:</label> <input type="text" id="name" th:field="*{name}"/></p>
@@ -41,7 +41,7 @@
     <p><input type="submit" value="Update"/></p>
 </form>
 
-<a href="/static">HOME</a>
+<a href="/">HOME</a>
 
 </body>
 
@@ -53,7 +53,7 @@
         const storeId = this.getAttribute('data-store-id');
 
         if (confirm('해당 매장을 삭제하시겠습니까?')) {
-            fetch(`/store/delete/${storeId}`, {
+            fetch(`/partners/stores/delete/${storeId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -63,7 +63,7 @@
                 .then(response => {
                     if (response.ok) {
                         alert('매장을 성공적으로 삭제하였습니다.');
-                        window.location.href = '/store/list';
+                        window.location.href = '/partners/stores';
                     } else {
                         alert('매장을 삭제하는 도중 에러가 발생했습니다.');
                     }

@@ -16,6 +16,12 @@
             padding: 10px;
             box-sizing: border-box;
         }
+
+        .store-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
     </style>
     <script th:src="@{/js/infiniteScroll.js}"></script>
     <link rel="stylesheet" th:href="@{/css/general.css}"/>
@@ -24,15 +30,16 @@
 
 <div id="storesContainer">
     <div class="store-item" th:each="store : ${storeSlice.content}">
-        <h2 th:text="${store.name}">Store Name</h2>
-        <p th:text="'Category: ' + ${store.categoryName}">Category Name</p>
-        <p th:text="'Capacity: ' + ${store.capacity}">Capacity</p>
-        <p th:text="'Open Time: ' + ${store.openTime}">Open Time</p>
-        <p th:text="'Close Time: ' + ${store.closeTime}">Close Time</p>
-        <p th:text="'Last Order Time: ' + ${store.lastOrderTime}">Last Order Time</p>
-        <p th:text="'Phone: ' + ${store.phone}">Phone Number</p>
-        <p th:text="'Address: ' + ${store.city} + ', ' + ${store.street} + ', ' + ${store.zipcode}">Address</p>
-        <p th:text="${store.description}">Description</p>
+        <a th:href="@{/stores/{storeId}(storeId=${store.id})}" class="store-link">
+            <h2 th:text="${store.name}">Store Name</h2>
+            <p th:text="'Category: ' + ${store.categoryName}">Category Name</p>
+            <p th:text="'Capacity: ' + ${store.capacity}">Capacity</p>
+            <p th:text="'Open Time: ' + ${store.openTime}">Open Time</p>
+            <p th:text="'Close Time: ' + ${store.closeTime}">Close Time</p>
+            <p th:text="'Last Order Time: ' + ${store.lastOrderTime}">Last Order Time</p>
+            <p th:text="'Phone: ' + ${store.phone}">Phone Number</p>
+            <p th:text="${store.description}">Description</p>
+        </a>
     </div>
 </div>
 

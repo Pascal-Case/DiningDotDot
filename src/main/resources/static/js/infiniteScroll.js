@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const size = 4; // 페이지 당 항목 수
     const observer = new IntersectionObserver(entries => {
         if (entries[0].isIntersecting) {
-            console.log("intersecting")
             page++;
             fetch(`/stores/slice?page=${page}&size=${size}`)
                 .then(response => response.json())
@@ -15,15 +14,17 @@ document.addEventListener('DOMContentLoaded', () => {
                             const storeItem = document.createElement('div');
                             storeItem.classList.add('store-item');
                             storeItem.innerHTML = `
-                                <h2>${store.name}</h2>
-                                <p>Category: ${store.categoryName}</p>
-                                <p>Capacity: ${store.capacity}</p>
-                                <p>Open Time: ${store.openTime}</p>
-                                <p>Close Time: ${store.closeTime}</p>
-                                <p>Last Order Time: ${store.lastOrderTime}</p>
-                                <p>Phone: ${store.phone}</p>
-                                <p>Address: ${store.city}, ${store.street}, ${store.zipcode}</p>
-                                <p>${store.description}</p>
+                                <a href="/stores/${store.id}" class="store-link">
+                                    <h2>${store.name}</h2>
+                                    <p>Category: ${store.categoryName}</p>
+                                    <p>Capacity: ${store.capacity}</p>
+                                    <p>Open Time: ${store.openTime}</p>
+                                    <p>Close Time: ${store.closeTime}</p>
+                                    <p>Last Order Time: ${store.lastOrderTime}</p>
+                                    <p>Phone: ${store.phone}</p>
+                                    <p>Address: ${store.city}, ${store.street}, ${store.zipcode}</p>
+                                    <p>${store.description}</p>
+                                </a>
                             `;
                             document.getElementById('storesContainer').appendChild(storeItem);
                         });

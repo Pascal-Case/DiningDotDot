@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/partners")
+@RequestMapping("/partners/stores")
 public class PartnerStoreController {
     private final StoreCategoryRepository storeCategoryRepository;
     private final StoreService storeService;
 
-    @GetMapping("/list")
-    public String registerPage(Model model) {
+    @GetMapping
+    public String myStoreListPage(Model model) {
         model.addAttribute("storeList", storeService.findStoreListByCurrentPartner());
         model.addAttribute("storeDTO", new StoreDTO());
         model.addAttribute("categories", storeCategoryRepository.findAll());
@@ -35,7 +35,7 @@ public class PartnerStoreController {
             return "partners/myStoreList";
         }
         storeService.registerStore(storeDTO);
-        return "redirect:myStoreList";
+        return "redirect:/partners/stores";
     }
 
     @GetMapping("/edit/{id}")
@@ -44,7 +44,7 @@ public class PartnerStoreController {
             Model model) {
         StoreDTO store = storeService.getStoreDtoById(id);
         if (store == null) {
-            return "redirect:myStoreList";
+            return "redirect:/partners/stores";
         }
         model.addAttribute("storeDTO", store);
         model.addAttribute("categories", storeCategoryRepository.findAll());
@@ -56,7 +56,7 @@ public class PartnerStoreController {
             @ModelAttribute StoreDTO storeDTO
     ) {
         storeService.updateStore(storeDTO);
-        return "redirect:myStoreList";
+        return "redirect:/partners/stores";
     }
 
     @DeleteMapping("/delete/{id}")

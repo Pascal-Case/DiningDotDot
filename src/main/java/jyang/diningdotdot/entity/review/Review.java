@@ -21,6 +21,6 @@ public class Review extends BaseEntity {
     private Reservation reservation;
 
     private String content;
-    private Integer rating;
+    private Double rating;
 
 }

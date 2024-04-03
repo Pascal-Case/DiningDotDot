@@ -3,6 +3,7 @@ package jyang.diningdotdot.service;
 import jakarta.persistence.EntityNotFoundException;
 import jyang.diningdotdot.config.AuthenticationFacade;
 import jyang.diningdotdot.dto.store.StoreDTO;
+import jyang.diningdotdot.dto.store.StoreDetailDTO;
 import jyang.diningdotdot.dto.store.StoreListDTO;
 import jyang.diningdotdot.entity.store.Store;
 import jyang.diningdotdot.entity.store.StoreCategory;
@@ -67,7 +68,6 @@ public class StoreService {
     public List<Store> findStoreListByCurrentPartner() {
         String currentPartnerUsername = authenticationFacade.getCurrentUsername();
         Partner partner = getPartner(currentPartnerUsername);
-        System.out.println("partners = " + partner);
         return storeRepository.findByPartner(partner);
     }
 
@@ -81,8 +81,11 @@ public class StoreService {
 
 
     public StoreDTO getStoreDtoById(Long id) {
-        Store store = getStore(id);
-        return StoreDTO.fromEntity(store);
+        return StoreDTO.fromEntity(getStore(id));
+    }
+
+    public StoreDetailDTO getStoreDetailDtoById(Long id) {
+        return StoreDetailDTO.fromEntity(getStore(id));
     }
 
 
