@@ -35,7 +35,7 @@
     <div class="modal-content">
         <span id="closeReservationFormBtn" class="close">&times;</span>
         <h2>예약하기</h2>
-        <form th:action="@{/reservation}" th:object="${reservationDTO}" method="post">
+        <form th:action="@{/reservations}" th:object="${reservationDTO}" method="post">
             <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
             <input type="hidden" th:value="${storeId}" name="storeId"/>
             <p>

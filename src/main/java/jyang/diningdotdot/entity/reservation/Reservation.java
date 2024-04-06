@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import static jyang.diningdotdot.entity.reservation.ReservationStatus.*;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -35,5 +37,33 @@ public class Reservation extends BaseEntity {
 
     private String memo;
 
+    // 예약 상태를 취소로 변경
+    public void setToCanceled() {
+        this.reservationStatus = CANCELLED;
+    }
 
+    // 예약 상태를 승인으로 변경
+    public void setToApproved() {
+        this.reservationStatus = APPROVED;
+    }
+
+    // 예약 상태를 거절로 변경
+    public void setToRejected() {
+        this.reservationStatus = REJECTED;
+    }
+
+    // 예약 상태를 확정으로 변경
+    public void setToConfirmed() {
+        this.reservationStatus = CONFIRMED;
+    }
+
+    // 예약 상태를 완료로 변경
+    public void setToCompleted() {
+        this.reservationStatus = COMPLETED;
+    }
+
+    // 예약 상태를 노쇼로 변경
+    public void setToNoShow() {
+        this.reservationStatus = NOSHOW;
+    }
 }

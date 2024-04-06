@@ -40,4 +40,12 @@ public class AuthenticationFacade {
         return null;
     }
 
+    public String getCurrentName() {
+        CustomUserDetails userDetails = getCustomUserDetails();
+        if (userDetails != null) {
+            return userDetails.getName();
+        }
+        return null;
+    }
+
 }
