@@ -41,4 +41,10 @@ public class StoreController {
         model.addAttribute("storeId", storeId);
         return "stores/detail";
     }
+
+    @GetMapping("/slice")
+    public Slice<StoreListDTO> getStoresSlice(
+            @PageableDefault Pageable pageable) {
+        return storeService.getStoreSlice(pageable);
+    }
 }
