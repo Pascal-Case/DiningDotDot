@@ -1,5 +1,6 @@
 package jyang.diningdotdot.controller.store;
 
+import jyang.diningdotdot.dto.reservation.ReservationDTO;
 import jyang.diningdotdot.dto.store.StoreDetailDTO;
 import jyang.diningdotdot.dto.store.StoreListDTO;
 import jyang.diningdotdot.service.StoreService;
@@ -36,6 +37,8 @@ public class StoreController {
     ) {
         StoreDetailDTO storeDetailDTO = storeService.getStoreDetailDtoById(storeId);
         model.addAttribute("storeDetail", storeDetailDTO);
+        model.addAttribute("reservationDTO", new ReservationDTO());
+        model.addAttribute("storeId", storeId);
         return "stores/detail";
     }
 }

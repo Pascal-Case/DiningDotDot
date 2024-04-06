@@ -13,14 +13,31 @@ public class AuthenticationFacade {
         return SecurityContextHolder.getContext().getAuthentication();
     }
 
-    public String getCurrentUsername() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    private CustomUserDetails getCustomUserDetails() {
+        Authentication authentication = getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken) && authentication.isAuthenticated()) {
             Object principal = authentication.getPrincipal();
-            if (principal instanceof CustomUserDetails userDetails) {
-                return userDetails.getUsername();
+            if (principal instanceof CustomUserDetails) {
+                return (CustomUserDetails) principal;
             }
         }
         return null;
     }
+
+    public String getCurrentUsername() {
+        CustomUserDetails userDetails = getCustomUserDetails();
+        if (userDetails != null) {
+            return userDetails.getUsername();
+        }
+        return null;
+    }
+
+    public Long getCurrentUserId() {
+        CustomUserDetails userDetails = getCustomUserDetails();
+        if (userDetails != null) {
+            return userDetails.getUserId();
+        }
+        return null;
+    }
+
 }

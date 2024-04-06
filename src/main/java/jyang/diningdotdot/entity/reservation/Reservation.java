@@ -3,7 +3,7 @@ package jyang.diningdotdot.entity.reservation;
 import jakarta.persistence.*;
 import jyang.diningdotdot.entity.common.BaseEntity;
 import jyang.diningdotdot.entity.store.Store;
-import jyang.diningdotdot.entity.user.User;
+import jyang.diningdotdot.entity.user.BaseUser;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,8 +19,8 @@ import java.time.LocalDateTime;
 public class Reservation extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "base_user_id")
+    private BaseUser baseUser;
 
     @ManyToOne
     @JoinColumn(name = "store_id")

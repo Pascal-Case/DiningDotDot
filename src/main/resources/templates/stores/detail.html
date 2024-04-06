@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/general.css}"/>
+    <link rel="stylesheet" th:href="@{/css/modal.css}"/>
 </head>
 <body>
 <div>
@@ -25,18 +26,59 @@
     <h2>Additional Information</h2>
     <p><strong>Rating:</strong> <span th:text="${storeDetail.rating}"></span></p>
 
-    <!--    <button type="button" id="showReservationFormBtn">-->
-    <!--        예약하기-->
-    <!--    </button>-->
+    <button type="button" id="showReservationFormBtn">
+        예약하기
+    </button>
+</div>
 
-    <!--    <div id="reservationFormModal" class="modal">-->
-    <!--        <span id="closeReservationFormBtn" class="close">&times;</span>-->
-    <!--        <h2>예약하기</h2>-->
-    <!--        <form th:action="@{/stores/reservation}" th:object="${reservationDTO}" method="post">-->
-
-    <!--        </form>-->
-    <!--    </div>-->
+<div id="reservationFormModal" class="modal">
+    <div class="modal-content">
+        <span id="closeReservationFormBtn" class="close">&times;</span>
+        <h2>예약하기</h2>
+        <form th:action="@{/reservation}" th:object="${reservationDTO}" method="post">
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+            <input type="hidden" th:value="${storeId}" name="storeId"/>
+            <p>
+                <label for="strReservationDate">Reservation Date:</label>
+                <input type="date" id="strReservationDate" name="strReservationDate"/>
+            </p>
+            <p>
+                <label for="strReservationTime">Reservation Time:</label>
+                <input type="time" id="strReservationTime" name="strReservationTime"/>
+            </p>
+            <p>
+                <label for="partySize">인원:</label>
+                <input type="number" id="partySize" th:field="*{partySize}"/>
+            </p>
+            <p>
+                <label for="memo">요청사항:</label>
+                <textarea id="memo" th:field="*{memo}"></textarea>
+            </p>
+            <p><input type="submit" value="Submit"/></p>
+        </form>
+    </div>
 </div>
 
 </body>
+
+<script>
+    const modal = document.getElementById('reservationFormModal');
+    const showModalBtn = document.getElementById('showReservationFormBtn');
+    const closeModalBtn = document.getElementById('closeReservationFormBtn');
+
+    showModalBtn.onclick = function () {
+        modal.style.display = 'block';
+    }
+
+    closeModalBtn.onclick = function () {
+        modal.style.display = 'none';
+    }
+
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    }
+</script>
+
 </html>

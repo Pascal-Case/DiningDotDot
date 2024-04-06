@@ -30,7 +30,6 @@ public class StoreService {
     private final StoreCategoryRepository storeCategoryRepository;
     private final AuthenticationFacade authenticationFacade;
 
-
     @Transactional
     public void registerStore(StoreDTO storeDTO) {
         String currentPartnerUsername = authenticationFacade.getCurrentUsername();
@@ -55,14 +54,14 @@ public class StoreService {
 
     @Transactional
     public void updateStore(StoreDTO storeDTO) {
-        Store store = getStore(storeDTO.getId());
+        Store store = getStoreById(storeDTO.getId());
         StoreCategory storeCategory = getStoreCategory(storeDTO.getCategoryId());
         store.updateStore(storeDTO, storeCategory);
     }
 
     @Transactional
     public void deleteStore(Long id) {
-        storeRepository.delete(getStore(id));
+        storeRepository.delete(getStoreById(id));
     }
 
     public List<Store> findStoreListByCurrentPartner() {
@@ -79,27 +78,26 @@ public class StoreService {
         return new SliceImpl<>(storeList, pageable, storeSlice.hasNext());
     }
 
-
     public StoreDTO getStoreDtoById(Long id) {
-        return StoreDTO.fromEntity(getStore(id));
+        return StoreDTO.fromEntity(getStoreById(id));
     }
 
     public StoreDetailDTO getStoreDetailDtoById(Long id) {
-        return StoreDetailDTO.fromEntity(getStore(id));
+        return StoreDetailDTO.fromEntity(getStoreById(id));
     }
 
 
-    private StoreCategory getStoreCategory(Long id) {
+    public StoreCategory getStoreCategory(Long id) {
         return storeCategoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("StoreCategory not found"));
     }
 
-    private Partner getPartner(String currentPartnerUsername) {
+    public Partner getPartner(String currentPartnerUsername) {
         return partnerRepository.findByUsername(currentPartnerUsername)
                 .orElseThrow(() -> new EntityNotFoundException("Partner not found"));
     }
 
-    private Store getStore(Long id) {
+    public Store getStoreById(Long id) {
         return storeRepository.findById(id).
                 orElseThrow(() -> new EntityNotFoundException("Store not found"));
     }
