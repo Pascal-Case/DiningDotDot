@@ -17,7 +17,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("my")
+@RequestMapping("/my")
 public class MyController {
     private final ReservationService reservationService;
     private final AuthenticationFacade authenticationFacade;

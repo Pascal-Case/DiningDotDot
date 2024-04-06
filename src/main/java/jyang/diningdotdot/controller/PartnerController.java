@@ -22,7 +22,7 @@ public class PartnerController {
     @GetMapping("/join")
     public String joinPage(Model model) {
         model.addAttribute("joinForm", new JoinForm());
-        return "partners/join";
+        return "/join/partners";
     }
 
     @PostMapping("/joinProc")
@@ -30,7 +30,7 @@ public class PartnerController {
             @ModelAttribute @Valid JoinForm joinForm,
             BindingResult result) {
         if (result.hasErrors()) {
-            return "partners/join";
+            return "/join/partners";
         }
         partnerService.joinProcess(joinForm);
         return "redirect:/login";

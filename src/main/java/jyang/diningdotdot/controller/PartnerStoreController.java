@@ -1,4 +1,4 @@
-package jyang.diningdotdot.controller.store;
+package jyang.diningdotdot.controller;
 
 import jakarta.validation.Valid;
 import jyang.diningdotdot.dto.store.StoreDTO;
@@ -23,7 +23,7 @@ public class PartnerStoreController {
         model.addAttribute("storeList", storeService.findStoreListByCurrentPartner());
         model.addAttribute("storeDTO", new StoreDTO());
         model.addAttribute("categories", storeCategoryRepository.findAll());
-        return "partners/myStoreList";
+        return "partners/stores/list";
     }
 
     @PostMapping("/register")
@@ -32,7 +32,7 @@ public class PartnerStoreController {
             BindingResult result
     ) {
         if (result.hasErrors()) {
-            return "partners/myStoreList";
+            return "partners/stores/list";
         }
         storeService.registerStore(storeDTO);
         return "redirect:/partners/stores";
@@ -48,7 +48,7 @@ public class PartnerStoreController {
         }
         model.addAttribute("storeDTO", store);
         model.addAttribute("categories", storeCategoryRepository.findAll());
-        return "partners/editStore";
+        return "partners/stores/edit";
     }
 
     @PostMapping("/update")

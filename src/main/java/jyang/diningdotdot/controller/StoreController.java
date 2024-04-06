@@ -1,4 +1,4 @@
-package jyang.diningdotdot.controller.store;
+package jyang.diningdotdot.controller;
 
 import jyang.diningdotdot.dto.reservation.ReservationDTO;
 import jyang.diningdotdot.dto.store.StoreDetailDTO;

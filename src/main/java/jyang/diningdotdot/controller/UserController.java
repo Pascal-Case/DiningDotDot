@@ -21,7 +21,7 @@ public class UserController {
     @GetMapping("/join")
     public String joinPage(Model model) {
         model.addAttribute("joinForm", new JoinForm());
-        return "users/join";
+        return "join/users";
     }
 
     @PostMapping("/joinProc")
@@ -29,7 +29,7 @@ public class UserController {
             @ModelAttribute @Valid JoinForm joinForm,
             BindingResult result) {
         if (result.hasErrors()) {
-            return "users/join";
+            return "join/users";
         }
         userService.joinProcess(joinForm);
         return "redirect:/login";
