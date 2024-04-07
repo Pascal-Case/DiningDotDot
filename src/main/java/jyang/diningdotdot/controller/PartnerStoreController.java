@@ -2,6 +2,7 @@ package jyang.diningdotdot.controller;
 
 import jakarta.validation.Valid;
 import jyang.diningdotdot.dto.store.StoreDTO;
+import jyang.diningdotdot.dto.store.StoreListDTO;
 import jyang.diningdotdot.repository.StoreCategoryRepository;
 import jyang.diningdotdot.service.StoreService;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,7 +23,8 @@ public class PartnerStoreController {
 
     @GetMapping
     public String myStoreListPage(Model model) {
-        model.addAttribute("storeList", storeService.findStoreListByCurrentPartner());
+        List<StoreListDTO> storeList = storeService.findStoreListByCurrentPartner();
+        model.addAttribute("storeList", storeList);
         model.addAttribute("storeDTO", new StoreDTO());
         model.addAttribute("categories", storeCategoryRepository.findAll());
         return "partners/stores/list";

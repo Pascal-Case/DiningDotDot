@@ -64,10 +64,13 @@ public class StoreService {
         storeRepository.delete(getStoreById(id));
     }
 
-    public List<Store> findStoreListByCurrentPartner() {
+    public List<StoreListDTO> findStoreListByCurrentPartner() {
         String currentPartnerUsername = authenticationFacade.getCurrentUsername();
         Partner partner = getPartner(currentPartnerUsername);
-        return storeRepository.findByPartner(partner);
+        return storeRepository.findByPartner(partner)
+                .stream()
+                .map(StoreListDTO::fromEntity)
+                .toList();
     }
 
     public Slice<StoreListDTO> getStoreSlice(Pageable pageable) {

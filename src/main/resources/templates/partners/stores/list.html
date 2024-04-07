@@ -6,6 +6,30 @@
     <link rel="stylesheet" th:href="@{/css/general.css}"/>
     <link rel="stylesheet" th:href="@{/css/modal.css}"/>
 </head>
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .clickable-row {
+        cursor: pointer;
+    }
+
+    .clickable-row:hover {
+        background-color: #f5f5f5;
+    }
+</style>
 <body>
 <h1>Store List</h1>
 <button id="addStoreBtn">Add Store</button>
@@ -15,17 +39,13 @@
         <th>Name</th>
         <th>Phone</th>
         <th>Description</th>
-        <th>Action</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="store : ${storeList}">
+    <tr class="clickable-row" th:each="store : ${storeList}" th:data-id="${store.id}">
         <td th:text="${store.name}"></td>
         <td th:text="${store.phone}"></td>
         <td th:text="${store.description}"></td>
-        <td>
-            <a th:href="@{'/partners/stores/edit/' + ${store.id}}">매장 정보 수정</a> |
-        </td>
     </tr>
     </tbody>
 </table>
@@ -91,5 +111,15 @@
             addStoreModal.style.display = 'none';
         }
     }
+
+    const rows = document.querySelectorAll(".clickable-row");
+
+    rows.forEach(row => {
+        row.addEventListener("click", function () {
+            const storeId = this.dataset.id;
+            window.location.href = `/partners/stores/edit/${storeId}`;
+        });
+    });
+
 </script>
 </html>
