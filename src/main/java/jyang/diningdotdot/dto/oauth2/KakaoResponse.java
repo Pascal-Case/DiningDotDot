@@ -33,12 +33,13 @@ public class KakaoResponse implements OAuth2Response {
 
     @Override
     public String getName() {
-        return kakaoAccount.get("email").toString();
+        return kakaoAccount.get("name").toString();
     }
 
     @Override
     public String getPhone() {
-        return kakaoAccount.get("phone_number").toString();
+        String phoneNumber = kakaoAccount.get("phone_number").toString();
+        return phoneNumber.replace("+82", "0").replaceAll("\\s+", "");
     }
 
     @Override

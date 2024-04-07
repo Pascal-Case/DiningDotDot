@@ -74,8 +74,6 @@ public class PartnerReservationController {
     @PostMapping("/confirm/{reservationId}")
     public ResponseEntity<?> confirmReservation(@PathVariable Long reservationId
     ) {
-        System.out.println("@@@@@@@@@@@@@@@@@@@@@");
-        System.out.println(reservationId);
         Long currentUserId = authenticationFacade.getCurrentUserId();
         reservationService.confirmProcess(reservationId, currentUserId);
         return ResponseEntity.ok().build();

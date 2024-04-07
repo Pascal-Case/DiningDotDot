@@ -183,7 +183,7 @@ public class ReservationService {
      * @param reservationId 예약 id
      * @return 예약 entity
      */
-    private Reservation getReservationById(Long reservationId) {
+    Reservation getReservationById(Long reservationId) {
         return reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new EntityNotFoundException("Reservation not found"));
     }
@@ -197,7 +197,7 @@ public class ReservationService {
     public void checkIsReservationOwner(Long reservationId, Long currentUserId) {
         boolean isOwner = reservationRepository.existsByIdAndBaseUserId(reservationId, currentUserId);
         if (!isOwner) {
-            throw new RuntimeException("Access denied");
+            throw new AccessDeniedException("You do not have permission to view this reservation.");
         }
     }
 

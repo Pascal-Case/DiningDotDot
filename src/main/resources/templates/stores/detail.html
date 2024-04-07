@@ -35,26 +35,33 @@
     <div class="modal-content">
         <span id="closeReservationFormBtn" class="close">&times;</span>
         <h2>예약하기</h2>
-        <form th:action="@{/reservations}" th:object="${reservationDTO}" method="post">
+        <form th:action="@{/my/reservations}" th:object="${reservationDTO}" method="post">
             <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-            <input type="hidden" th:value="${storeId}" name="storeId"/>
-            <p>
-                <label for="strReservationDate">Reservation Date:</label>
-                <input type="date" id="strReservationDate" name="strReservationDate"/>
-            </p>
-            <p>
-                <label for="strReservationTime">Reservation Time:</label>
-                <input type="time" id="strReservationTime" name="strReservationTime"/>
-            </p>
-            <p>
+            <input type="hidden" name="storeId" th:value="${storeDetail.storeListDTO.id}"/>
+            <input type="hidden" id="reservationTime" name="reservationTime"/>
+            <div>
+                <label for="strReservationDate">예약 일시:</label>
+                <input type="date" id="strReservationDate" th:field="*{strReservationDate}" required/>
+            </div>
+
+            <div>
+                <label for="strReservationTime">예약 시간:</label>
+                <input type="time" id="strReservationTime" th:field="*{strReservationTime}" required/>
+            </div>
+
+            <div>
                 <label for="partySize">인원:</label>
-                <input type="number" id="partySize" th:field="*{partySize}"/>
-            </p>
-            <p>
+                <input type="number" id="partySize" th:field="*{partySize}" min="1" required/>
+            </div>
+
+            <div>
                 <label for="memo">요청사항:</label>
                 <textarea id="memo" th:field="*{memo}"></textarea>
-            </p>
-            <p><input type="submit" value="Submit"/></p>
+            </div>
+
+            <div>
+                <input type="submit" value="예약하기"/>
+            </div>
         </form>
     </div>
 </div>

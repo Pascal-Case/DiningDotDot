@@ -2,10 +2,7 @@ package jyang.diningdotdot.dto.reservation;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,9 +10,11 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString
 public class ReservationDTO {
     private Long storeId;
     private String strReservationDate; // 사용자 입력 날짜 문자열
@@ -29,6 +28,10 @@ public class ReservationDTO {
     private String memo;
 
     public void generateReservationTime() {
+        if (this.strReservationDate == null || this.strReservationDate.isEmpty() ||
+                this.strReservationTime == null || this.strReservationTime.isEmpty()) {
+            throw new IllegalArgumentException("예약 날짜와 시간을 모두 입력해야 합니다.");
+        }
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 

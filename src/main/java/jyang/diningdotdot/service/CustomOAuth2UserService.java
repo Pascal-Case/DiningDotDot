@@ -33,8 +33,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
 
         OAuth2Response oAuth2Response = createOAuth2Response(registrationId, oAuth2User.getAttributes());
-
-
+        
         User user = userRepository.findByUsername(oAuth2Response.getEmail())
                 .map(existingUser ->
                         existingUser.updateWithOAuth2Response(oAuth2Response))

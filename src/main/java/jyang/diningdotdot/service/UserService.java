@@ -1,5 +1,6 @@
 package jyang.diningdotdot.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jyang.diningdotdot.dto.common.JoinForm;
 import jyang.diningdotdot.entity.user.AuthType;
 import jyang.diningdotdot.entity.user.User;
@@ -35,5 +36,10 @@ public class UserService {
                 .build();
 
         userRepository.save(user);
+    }
+
+    public User fineUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 }

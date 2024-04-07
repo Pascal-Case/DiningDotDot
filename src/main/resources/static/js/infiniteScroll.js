@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
             fetch(`/stores/slice?page=${page}&size=${size}`)
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data)
                     if (data.content.length > 0) {
                         data.content.forEach(store => {
                             const storeItem = document.createElement('div');

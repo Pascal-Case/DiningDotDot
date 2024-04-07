@@ -2,7 +2,6 @@ package jyang.diningdotdot.dto.oauth2;
 
 import java.util.Map;
 
-
 public class NaverResponse implements OAuth2Response {
 
     private final Map<String, Object> attribute;
@@ -34,11 +33,11 @@ public class NaverResponse implements OAuth2Response {
 
     @Override
     public String getPhone() {
-        return attribute.get("phone_number").toString();
+        return attribute.get("mobile").toString();
     }
 
     @Override
     public String getNickName() {
-        return attribute.get("profile_nickname").toString();
+        return attribute.get("nickname").toString();
     }
 }
