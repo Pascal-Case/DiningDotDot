@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="_csrf" th:content="${_csrf.token}"/>
@@ -37,6 +37,10 @@
 
 <div class="container">
     <h1 class="title">예약 상세 정보</h1>
+    <div class="detail-item">
+        <label>예약번호:</label>
+        <div th:text="${reservation.id}"></div>
+    </div>
     <div class="detail-item">
         <label>상호명:</label>
         <div th:text="${reservation.storeName}"></div>

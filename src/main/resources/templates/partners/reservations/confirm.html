@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>예약 확인</title>
+    <link rel="stylesheet" th:href="@{/css/general.css}"/>
+</head>
+<style>
+    .reservation-confirmation {
+        text-align: center;
+        margin-top: 50px;
+    }
+
+    .number-pad button {
+        width: 50px;
+        height: 50px;
+        margin: 5px;
+    }
+
+    #confirmationNumber {
+        font-size: 24px;
+        text-align: center;
+    }
+
+    .alert {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        display: none;
+        padding: 10px;
+        color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+    }
+
+    .alert-success {
+        background-color: #4CAF50;
+    }
+
+    .alert-danger {
+        background-color: #F44336;
+    }
+
+
+</style>
+<body>
+<!-- 성공 메시지 -->
+<div th:if="${successMessage}" th:text="${successMessage}" class="alert alert-success"></div>
+<!-- 에러 메시지 -->
+<div th:if="${errorMessage}" th:text="${errorMessage}" class="alert alert-danger"></div>
+
+<!-- 예약 확인 섹션 -->
+<div class="reservation-confirmation">
+    <h1>예약 확인</h1>
+    <p>예약 번호를 입력해 주세요.</p>
+
+    <label for="confirmationNumber"></label>
+    <input type="text" id="confirmationNumber" readonly/>
+
+    <div class="number-pad">
+        <button th:each="num : ${#numbers.sequence(1,9)}" th:text="${num}"
+                th:onclick="'addNumber(' + ${num} + ');'"></button>
+        <button onclick="removeNumber();">&larr;</button>
+        <button onclick="addNumber('0');">0</button>
+        <button id="confirmReservationBtn">&#10004;</button>
+    </div>
+</div>
+
+<script>
+
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+    const confirmReservationBtn = document.getElementById("confirmReservationBtn");
+
+    // 번호 추가
+    function addNumber(num) {
+        const input = document.getElementById('confirmationNumber');
+        if (input.value.length < 4) {
+            input.value = input.value + num;
+        }
+    }
+
+    // 번호 제거
+    function removeNumber() {
+        const input = document.getElementById('confirmationNumber');
+        input.value = input.value.slice(0, -1);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach((alert) => {
+            if (alert.textContent.trim().length > 0) {
+                alert.style.display = 'block';
+                setTimeout(() => {
+                    alert.style.opacity = '0';
+                }, 3000);
+            }
+        });
+
+        confirmReservationBtn.addEventListener("click", () => {
+            const reservationId = document.getElementById('confirmationNumber').value;
+            const url = `/partners/reservations/confirm/${reservationId}`
+
+            if (confirm('예약을 확정하시겠습니까?')) {
+                console.log(url);
+                fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        [csrfHeader]: csrfToken,
+                    }
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('예약을 성공적으로 확정하였습니다.');
+                            window.location.href = '/partners/reservations/confirm';
+                        } else {
+                            alert('예약을 확정하는 도중 에러가 발생했습니다.');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        })
+    });
+</script>
+</body>
+</html>

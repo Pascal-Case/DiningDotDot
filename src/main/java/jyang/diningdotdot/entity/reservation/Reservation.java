@@ -37,6 +37,11 @@ public class Reservation extends BaseEntity {
 
     private String memo;
 
+    // 예약 상태를 대기로 변경
+    public void setToPending() {
+        this.reservationStatus = PENDING;
+    }
+
     // 예약 상태를 취소로 변경
     public void setToCanceled() {
         this.reservationStatus = CANCELLED;
