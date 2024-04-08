@@ -19,12 +19,14 @@ public class PartnerController {
 
     private final PartnerService partnerService;
 
+    // 파트너 가입 페이지
     @GetMapping("/join")
     public String joinPage(Model model) {
         model.addAttribute("joinForm", new JoinForm());
         return "/join/partners";
     }
 
+    // 파트너 가입
     @PostMapping("/joinProc")
     public String joinProcess(
             @ModelAttribute @Valid JoinForm joinForm,

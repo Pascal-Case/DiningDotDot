@@ -26,6 +26,7 @@ public class StoreController {
     private final ReviewRepository reviewRepository;
     private final AuthenticationFacade authenticationFacade;
 
+    // 매장 리스트 페이지
     @GetMapping
     public String storeListPage(
             Model model,
@@ -36,6 +37,7 @@ public class StoreController {
         return "stores/list";
     }
 
+    // 매장 상세 정보 페이지
     @GetMapping("/{storeId}")
     public String storeDetailPage(
             Model model,
@@ -48,6 +50,7 @@ public class StoreController {
         return "stores/detail";
     }
 
+    // 매장 슬라이스
     @GetMapping("/slice")
     @ResponseBody
     public Slice<StoreListDTO> getStoresSlice(
@@ -56,6 +59,7 @@ public class StoreController {
         return storeService.searchStoresByQuery(query, pageable);
     }
 
+    // 리뷰 상세 페이지
     @GetMapping("/reviews/{reviewId}")
     public String reviewDetailPage(Model model, @PathVariable Long reviewId) {
         ReviewDetailDTO reviewDetail = reviewService.getReviewDetail(reviewId);

@@ -33,7 +33,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
 
         OAuth2Response oAuth2Response = createOAuth2Response(registrationId, oAuth2User.getAttributes());
-        
+
         User user = userRepository.findByUsername(oAuth2Response.getEmail())
                 .map(existingUser ->
                         existingUser.updateWithOAuth2Response(oAuth2Response))
@@ -44,6 +44,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         return new CustomOAuth2User(oAuth2Response, Role.ROLE_USER);
     }
 
+    // 소셜 로그인 응답 객체 바인딩
     private OAuth2Response createOAuth2Response(String registrationId, Map<String, Object> attributes) {
         if ("naver".equals(registrationId)) {
             return new NaverResponse(attributes);
@@ -54,6 +55,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         }
     }
 
+    // 소셜 로그인으로 신규 일반 유저 등록
     private User registerNewUser(OAuth2Response oAuth2Response, String registrationId) {
         // 새로운 사용자 등록 로직
         return User.builder()

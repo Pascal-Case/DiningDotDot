@@ -21,6 +21,7 @@ public class PartnerStoreController {
     private final StoreCategoryRepository storeCategoryRepository;
     private final StoreService storeService;
 
+    // 내 매장 리스트 페이지
     @GetMapping
     public String myStoreListPage(Model model) {
         List<StoreListDTO> storeList = storeService.findStoreListByCurrentPartner();
@@ -30,6 +31,7 @@ public class PartnerStoreController {
         return "partners/stores/list";
     }
 
+    // 매장 등록 처리
     @PostMapping("/register")
     public String registerProcess(
             @ModelAttribute @Valid StoreDTO storeDTO,
@@ -42,6 +44,7 @@ public class PartnerStoreController {
         return "redirect:/partners/stores";
     }
 
+    // 매장 정보 수정 페이지
     @GetMapping("/edit/{id}")
     public String getStoreDetails(
             @PathVariable Long id,
@@ -55,6 +58,7 @@ public class PartnerStoreController {
         return "partners/stores/edit";
     }
 
+    // 매장 정보 업데이트
     @PostMapping("/update")
     public String updateStore(
             @ModelAttribute StoreDTO storeDTO
@@ -63,6 +67,7 @@ public class PartnerStoreController {
         return "redirect:/partners/stores";
     }
 
+    // 매장 삭제 처리
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteStore(@PathVariable Long id) {
         storeService.deleteStore(id);

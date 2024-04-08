@@ -14,6 +14,12 @@ public class BaseUserService {
 
     private final BaseUserRepository baseUserRepository;
 
+    /**
+     * 베이스유저 가져오기
+     *
+     * @param id 유저 id
+     * @return 베이스 유저
+     */
     public BaseUser findBaseUserById(Long id) {
         return baseUserRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));

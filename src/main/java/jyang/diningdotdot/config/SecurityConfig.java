@@ -27,7 +27,7 @@ public class SecurityConfig {
 
         http.
                 authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login", "/main/**", "/stores/**",
+                        .requestMatchers("/login",
                                 "/users/join", "/users/joinProc",
                                 "/partners/join", "/partners/joinProc").permitAll()
                         .requestMatchers("/js/**", "/css/**", "/img/**").permitAll() // 정적 파일

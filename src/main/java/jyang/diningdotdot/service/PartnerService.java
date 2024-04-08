@@ -18,6 +18,11 @@ public class PartnerService {
     private final PartnerRepository partnerRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
+    /**
+     * 파트너 가입
+     *
+     * @param joinForm 파트너 가입 폼
+     */
     @Transactional
     public void joinProcess(JoinForm joinForm) {
         if (partnerRepository.existsByUsername(joinForm.getUsername())) {
@@ -36,8 +41,14 @@ public class PartnerService {
         partnerRepository.save(partner);
     }
 
-    private Partner getPartner(String username) {
-        return partnerRepository.findByUsername(username)
-                .orElseThrow(() -> new EntityNotFoundException("users not found"));
+    /**
+     * 파트너 가져오기
+     *
+     * @param currentPartnerUsername 유저네임
+     * @return 파트너
+     */
+    public Partner getPartner(String currentPartnerUsername) {
+        return partnerRepository.findByUsername(currentPartnerUsername)
+                .orElseThrow(() -> new EntityNotFoundException("Partner not found"));
     }
 }

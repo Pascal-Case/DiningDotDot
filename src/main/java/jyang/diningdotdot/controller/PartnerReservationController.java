@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Map;
@@ -25,6 +24,7 @@ public class PartnerReservationController {
     private final ReservationService reservationService;
     private final AuthenticationFacade authenticationFacade;
 
+    // 매장 예약 리스트 페이지
     @GetMapping
     public String myStoreReservationListPage(Model model) {
         Long currentUserId = authenticationFacade.getCurrentUserId();
@@ -33,6 +33,7 @@ public class PartnerReservationController {
         return "partners/reservations/list";
     }
 
+    // 예약 상태로 필터링
     @PostMapping("/filter")
     public String filterReservationsByStatus(@RequestParam List<String> status, Model model) {
         List<ReservationStatus> statusList = status.stream()
@@ -43,6 +44,7 @@ public class PartnerReservationController {
         return "partners/reservations/list";
     }
 
+    // 예약 상세 페이지
     @GetMapping("/detail/{reservationId}")
     public String reservationDetailPage(Model model, @PathVariable Long reservationId) {
         Long currentUserId = authenticationFacade.getCurrentUserId();
@@ -51,21 +53,23 @@ public class PartnerReservationController {
         return "partners/reservations/detail";
     }
 
+    // 예약 상태 변경
     @PostMapping("/{action}/{reservationId}")
     public String handleReservationAction(@PathVariable("action") String action,
-                                          @PathVariable("reservationId") Long reservationId,
-                                          RedirectAttributes redirectAttributes) {
+                                          @PathVariable("reservationId") Long reservationId) {
         Long currentUserId = authenticationFacade.getCurrentUserId();
         ReservationStatus status = ReservationStatus.fromAction(action);
         reservationService.changeReservationStatus(reservationId, currentUserId, status);
         return "redirect:/partners/reservations";
     }
 
+    // 예약 확정 페이지
     @GetMapping("/confirm")
     public String reservationConfirmPage() {
         return "partners/reservations/confirm";
     }
 
+    // 예약 확정 처리
     @PostMapping("/confirm/{reservationId}")
     public ResponseEntity<?> confirmReservation(@PathVariable Long reservationId
     ) {

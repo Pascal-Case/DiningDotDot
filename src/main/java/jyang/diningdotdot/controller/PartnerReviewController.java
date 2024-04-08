@@ -18,6 +18,7 @@ public class PartnerReviewController {
     private final AuthenticationFacade authenticationFacade;
     private final ReviewService reviewService;
 
+    // 매장 리뷰 리스트 페이지
     @GetMapping
     public String myStoresReviewsPage(Model model) {
         Long partnerId = authenticationFacade.getCurrentUserId();

@@ -14,13 +14,9 @@ public class HomeController {
 
     @GetMapping("/")
     public String mainPage(Model model) {
-
-
         model.addAttribute("id", authenticationFacade.getCurrentUserId());
         model.addAttribute("name", authenticationFacade.getCurrentName());
         model.addAttribute("username", authenticationFacade.getCurrentUsername());
-
-
         return "main";
     }
 }

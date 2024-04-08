@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserController {
     private final UserService userService;
 
+    // 일반 유저 가입 페이지
     @GetMapping("/join")
     public String joinPage(Model model) {
         model.addAttribute("joinForm", new JoinForm());
         return "join/users";
     }
 
+    // 일반 유저 가입
     @PostMapping("/joinProc")
     public String joinProcess(
             @ModelAttribute @Valid JoinForm joinForm,

@@ -16,6 +16,7 @@ public class ReviewController {
     private final AuthenticationFacade authenticationFacade;
     private final ReviewService reviewService;
 
+    // 매장 삭제
     @DeleteMapping("{reviewId}")
     public ResponseEntity<?> deleteReview(@PathVariable Long reviewId) {
         Long userId = authenticationFacade.getCurrentUserId();

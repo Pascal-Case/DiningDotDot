@@ -19,10 +19,15 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
+    /**
+     * 일반 유저 가입
+     *
+     * @param joinForm 가입 폼
+     */
     @Transactional
     public void joinProcess(JoinForm joinForm) {
         if (userRepository.existsByUsername(joinForm.getUsername())) {
-            throw new RuntimeException("존재하는 메일 주소");
+            throw new RuntimeException("이미 등록된 메일 주소입니다.");
         }
 
         User user = User.builder()
@@ -38,6 +43,12 @@ public class UserService {
         userRepository.save(user);
     }
 
+    /**
+     * 유저 가져오기
+     *
+     * @param username 유저네임
+     * @return 유저
+     */
     public User fineUserByUsername(String username) {
         return userRepository.findByUsername(username)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
