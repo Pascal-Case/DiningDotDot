@@ -1,6 +1,7 @@
 package jyang.diningdotdot.dto.store;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jyang.diningdotdot.entity.common.Address;
 import jyang.diningdotdot.entity.store.Store;
 import lombok.*;
@@ -26,6 +27,8 @@ public class StoreDTO {
     private LocalTime closeTime;
     @DateTimeFormat(pattern = "HH:mm")
     private LocalTime lastOrderTime;
+    @NotBlank(message = "휴대전화 번호를 입력해 주세요.")
+    @Pattern(regexp = "^010-\\d{4}-\\d{4}$", message = "유효하지 않은 휴대전화 번호 입니다.")
     private String phone;
     private String description;
     private String city;
