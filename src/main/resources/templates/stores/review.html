@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>리뷰 상세 정보</title>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" th:href="@{/css/general.css}">
+</head>
+<body>
+<div class="review-detail">
+    <h2>리뷰 상세 정보</h2>
+    <div>
+        <label>가게명:</label>
+        <span th:text="${reviewDetail.storeName}"></span>
+    </div>
+    <div>
+        <label>작성자:</label>
+        <span th:text="${reviewDetail.reviewerName}"></span>
+    </div>
+    <div>
+        <label>별점:</label>
+        <span th:text="${reviewDetail.rating}"></span>
+    </div>
+    <div>
+        <label>내용:</label>
+        <p th:text="${reviewDetail.content}"></p>
+    </div>
+    <div>
+        <label>방문 날짜:</label>
+        <span th:text="${#temporals.format(reviewDetail.visitDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
+    </div>
+    <div>
+        <label>리뷰 작성 날짜:</label>
+        <span th:text="${#temporals.format(reviewDetail.postDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
+    </div>
+
+    <!-- 리뷰 오너만 수정 가능 -->
+    <div th:if="${isOwner}">
+        <button type="button" id="editButton" th:attr="data-review-id=${reviewDetail.reviewId}">
+            수정
+        </button>
+    </div>
+
+    <!-- 리뷰 오너 및 매장 관리자만 삭제 가능 -->
+    <div th:if="${isOwner}">
+        <button type="button" id="deleteButton"
+                th:attr="data-review-id=${reviewDetail.reviewId}, data-store-id=${reviewDetail.storeId}">
+            삭제
+        </button>
+
+    </div>
+
+
+</div>
+
+<script>
+    const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
+    const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
+    const deleteButton = document.getElementById('deleteButton');
+    const editButton = document.getElementById('editButton');
+    deleteButton.addEventListener('click', function () {
+        const reviewId = this.getAttribute('data-review-id');
+        const storeId = this.getAttribute('data-store-id');
+
+        if (confirm('해당 리뷰를 삭제하시겠습니까?')) {
+            fetch(`/reviews/${reviewId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    [csrfHeader]: csrfToken,
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('리뷰를 성공적으로 삭제하였습니다.');
+                        window.location.href = `/stores/${storeId}`;
+                    } else {
+                        alert('리뷰를 삭제하는 도중 에러가 발생했습니다.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+    });
+
+    editButton.addEventListener('click', function () {
+        const reviewId = this.getAttribute('data-review-id');
+        location.href = `/my/reviews/edit/${reviewId}`;
+    })
+
+
+</script>
+
+</body>
+</html>

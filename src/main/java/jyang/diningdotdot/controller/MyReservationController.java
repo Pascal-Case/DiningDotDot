@@ -4,6 +4,7 @@ import jyang.diningdotdot.config.AuthenticationFacade;
 import jyang.diningdotdot.dto.reservation.ReservationDTO;
 import jyang.diningdotdot.dto.reservation.ReservationDetailDTO;
 import jyang.diningdotdot.dto.reservation.ReservationListDTO;
+import jyang.diningdotdot.dto.review.ReviewDTO;
 import jyang.diningdotdot.dto.store.StoreDetailDTO;
 import jyang.diningdotdot.service.ReservationService;
 import jyang.diningdotdot.service.StoreService;
@@ -76,6 +77,7 @@ public class MyReservationController {
         Long currentUserId = authenticationFacade.getCurrentUserId();
         ReservationDetailDTO reservationDetail = reservationService.getMyReservationDetail(reservationId, currentUserId);
 
+        model.addAttribute("reviewDTO", new ReviewDTO());
         model.addAttribute("reservation", reservationDetail);
         return "my/reservations/detail";
     }

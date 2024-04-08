@@ -5,7 +5,66 @@
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/general.css}"/>
 </head>
-<body>
+<style>
+    .star {
+        cursor: pointer;
+        font-size: 25px;
+        color: grey;
+    }
 
+    .star.selected {
+        color: gold;
+    }
+</style>
+<body>
+<form action="/my/reviews/update" method="post">
+    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+    <input type="hidden" name="reviewId" th:value="${reviewUpdateDTO.reviewId}"/>
+    <div>
+        <label for="content">리뷰 내용</label>
+        <textarea id="content" name="content" th:text="${reviewUpdateDTO.content}"></textarea>
+    </div>
+    <div>
+        <label>별점:</label>
+        <div id="star-rating">
+            <span class="star" data-value="1.0">&#9733;</span>
+            <span class="star" data-value="2.0">&#9733;</span>
+            <span class="star" data-value="3.0">&#9733;</span>
+            <span class="star" data-value="4.0">&#9733;</span>
+            <span class="star" data-value="5.0">&#9733;</span>
+        </div>
+        <label for="rating"></label>
+        <input type="hidden" id="rating" name="rating" th:value="${reviewUpdateDTO.rating}"/>
+    </div>
+
+    <button type="submit">수정하기</button>
+</form>
 </body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const currentRating = document.getElementById('rating').value;
+        updateStars(currentRating);
+
+        document.querySelectorAll('#star-rating .star').forEach(function (star) {
+            star.onclick = function () {
+                const ratingValue = this.getAttribute('data-value');
+                document.getElementById('rating').value = ratingValue;
+                updateStars(ratingValue);
+            };
+        });
+
+        function updateStars(ratingValue) {
+            document.querySelectorAll('#star-rating .star').forEach(function (star) {
+                const starValue = parseFloat(star.getAttribute('data-value'));
+                if (starValue <= parseFloat(ratingValue)) {
+                    star.classList.add('selected');
+                } else {
+                    star.classList.remove('selected');
+                }
+            });
+        }
+    });
+
+</script>
 </html>

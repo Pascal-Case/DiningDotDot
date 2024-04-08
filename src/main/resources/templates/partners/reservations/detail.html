@@ -135,7 +135,7 @@
                     .then(response => {
                         if (response.ok) {
                             alert('예약 상태 변경 요청이 성공했습니다.');
-                            window.location.reload();
+                            window.location.href = '/partners/reservations';
                         } else {
                             alert('예약 상태 변경 중 에러가 발생했습니다.');
                         }

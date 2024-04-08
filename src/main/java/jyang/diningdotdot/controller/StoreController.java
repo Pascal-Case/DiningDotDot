@@ -1,8 +1,11 @@
 package jyang.diningdotdot.controller;
 
+import jyang.diningdotdot.config.AuthenticationFacade;
 import jyang.diningdotdot.dto.reservation.ReservationDTO;
+import jyang.diningdotdot.dto.review.ReviewDetailDTO;
 import jyang.diningdotdot.dto.store.StoreDetailDTO;
 import jyang.diningdotdot.dto.store.StoreListDTO;
+import jyang.diningdotdot.service.ReviewService;
 import jyang.diningdotdot.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class StoreController {
 
     private final StoreService storeService;
+    private final ReviewService reviewService;
+    private final AuthenticationFacade authenticationFacade;
 
     @GetMapping
     public String storeListPage(
@@ -48,5 +53,15 @@ public class StoreController {
     public Slice<StoreListDTO> getStoresSlice(
             @PageableDefault Pageable pageable) {
         return storeService.getStoreSlice(pageable);
+    }
+
+    @GetMapping("/reviews/{reviewId}")
+    public String reviewDetailPage(Model model, @PathVariable Long reviewId) {
+        ReviewDetailDTO reviewDetail = reviewService.getReviewDetail(reviewId);
+        boolean isOwner = reviewDetail.getReviewerUsername()
+                .equals(authenticationFacade.getCurrentUsername());
+        model.addAttribute("isOwner", isOwner);
+        model.addAttribute("reviewDetail", reviewDetail);
+        return "/stores/review";
     }
 }
