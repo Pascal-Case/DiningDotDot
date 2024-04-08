@@ -27,31 +27,31 @@
     <link rel="stylesheet" th:href="@{/css/general.css}"/>
 </head>
 <body>
+<div class="main-container">
+    <a href="/">HOME</a>
 
-<a href="/">HOME</a>
+    <form action="/stores" id="search-form" method="GET">
+        <label for="search-input"></label>
+        <input type="text" id="search-input" name="query" placeholder="매장명, 음식, 주소 검색"/>
+        <button type="submit">검색</button>
+    </form>
 
-<form action="/stores" id="search-form" method="GET">
-    <label for="search-input"></label>
-    <input type="text" id="search-input" name="query" placeholder="매장명, 음식, 주소 검색"/>
-    <button type="submit">검색</button>
-</form>
-
-<div id="storesContainer">
-    <div class="store-item" th:each="store : ${storeSlice.content}">
-        <a th:href="@{/stores/{storeId}(storeId=${store.id})}" class="store-link">
-            <h2 th:text="${store.name}">상호명</h2>
-            <p th:text="'카테고리: ' + ${store.categoryName}"></p>
-            <p th:text="'수용 인원: ' + ${store.capacity}"></p>
-            <p th:text="'오픈 시간: ' + ${store.openTime}"></p>
-            <p th:text="'마감 시간: ' + ${store.closeTime}"></p>
-            <p th:text="'라스트오더: ' + ${store.lastOrderTime}"></p>
-            <p th:text="'연락처: ' + ${store.phone}"></p>
-            <p th:text="${store.description}"></p>
-        </a>
+    <div id="storesContainer">
+        <div class="store-item" th:each="store : ${storeSlice.content}">
+            <a th:href="@{/stores/{storeId}(storeId=${store.id})}" class="store-link">
+                <h2 th:text="${store.name}">상호명</h2>
+                <p th:text="'카테고리: ' + ${store.categoryName}"></p>
+                <p th:text="'수용 인원: ' + ${store.capacity}"></p>
+                <p th:text="'오픈 시간: ' + ${store.openTime}"></p>
+                <p th:text="'마감 시간: ' + ${store.closeTime}"></p>
+                <p th:text="'라스트오더: ' + ${store.lastOrderTime}"></p>
+                <p th:text="'연락처: ' + ${store.phone}"></p>
+                <p th:text="${store.description}"></p>
+            </a>
+        </div>
     </div>
+
+    <div id="loadMore">Loading more stores...</div>
 </div>
-
-<div id="loadMore">Loading more stores...</div>
-
 </body>
 </html>

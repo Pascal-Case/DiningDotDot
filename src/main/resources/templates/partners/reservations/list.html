@@ -30,39 +30,43 @@
     }
 </style>
 <body>
-<form th:action="@{/partners/reservations/filter}" method="post">
-    <div>
-        <label><input type="checkbox" name="status" value="PENDING" checked> 대기</label>
-        <label><input type="checkbox" name="status" value="APPROVED"> 승인</label>
-        <label><input type="checkbox" name="status" value="REJECTED"> 거절</label>
-        <label><input type="checkbox" name="status" value="CONFIRMED"> 확정</label>
-        <label><input type="checkbox" name="status" value="CANCELLED"> 취소</label>
-        <label><input type="checkbox" name="status" value="COMPLETED"> 완료</label>
-        <label><input type="checkbox" name="status" value="NOSHOW"> 노쇼</label>
-    </div>
-    <button type="submit">상태별 예약 조회</button>
-</form>
+<div class="main-container">
 
-<table>
-    <thead>
-    <tr>
-        <th>예약 번호</th>
-        <th>예약 날짜</th>
-        <th>상호명</th>
-        <th>인원</th>
-        <th>예약 상태</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr class="clickable-row" th:each="reservation : ${reservationList}" th:data-id="${reservation.id}">
-        <td th:text="${reservation.id}"></td>
-        <td th:text="${#temporals.format(reservation.reservationTime, 'yyyy-MM-dd HH:mm')}"></td>
-        <td th:text="${reservation.storeName}"></td>
-        <td th:text="${reservation.partySize}"></td>
-        <td th:text="${reservation.reservationStatus.getDescription()}"></td>
-    </tr>
-    </tbody>
-</table>
+    <form th:action="@{/partners/reservations/filter}" method="post">
+        <div>
+            <label><input type="checkbox" name="status" value="PENDING" checked> 대기</label>
+            <label><input type="checkbox" name="status" value="APPROVED"> 승인</label>
+            <label><input type="checkbox" name="status" value="REJECTED"> 거절</label>
+            <label><input type="checkbox" name="status" value="CONFIRMED"> 확정</label>
+            <label><input type="checkbox" name="status" value="CANCELLED"> 취소</label>
+            <label><input type="checkbox" name="status" value="COMPLETED"> 완료</label>
+            <label><input type="checkbox" name="status" value="NOSHOW"> 노쇼</label>
+        </div>
+        <button type="submit">상태별 예약 조회</button>
+    </form>
+
+    <table>
+        <thead>
+        <tr>
+            <th>예약 번호</th>
+            <th>예약 날짜</th>
+            <th>상호명</th>
+            <th>인원</th>
+            <th>예약 상태</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="clickable-row" th:each="reservation : ${reservationList}" th:data-id="${reservation.id}">
+            <td th:text="${reservation.id}"></td>
+            <td th:text="${#temporals.format(reservation.reservationTime, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${reservation.storeName}"></td>
+            <td th:text="${reservation.partySize}"></td>
+            <td th:text="${reservation.reservationStatus.getDescription()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 <script>
     const rows = document.querySelectorAll(".clickable-row");
 

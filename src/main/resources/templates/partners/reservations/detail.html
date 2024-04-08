@@ -34,74 +34,76 @@
     </style>
 </head>
 <body>
+<div class="main-container">
 
-<div class="container">
-    <h1 class="title">예약 상세 정보</h1>
-    <div class="detail-item">
-        <label>예약번호:</label>
-        <div th:text="${reservation.id}"></div>
-    </div>
-    <div class="detail-item">
-        <label>상호명:</label>
-        <div th:text="${reservation.storeName}"></div>
-    </div>
-    <div class="detail-item">
-        <label>예약 시간:</label>
-        <div th:text="${#temporals.format(reservation.reservationTime, 'yyyy-MM-dd HH:mm')}"></div>
-    </div>
-    <div class="detail-item">
-        <label>인원:</label>
-        <div th:text="${reservation.partySize}"></div>
-    </div>
-    <div class="detail-item">
-        <label>예약 상태:</label>
-        <div th:text="${reservation.reservationStatus.getDescription()}"></div>
-    </div>
-    <div class="detail-item">
-        <label>메모:</label>
-        <div th:text="${reservation.memo}"></div>
-    </div>
-    <div class="detail-item">
-        <label>가게 연락처:</label>
-        <div th:text="${reservation.storePhone}"></div>
-    </div>
-    <div class="detail-item">
-        <label>가게 주소:</label>
-        <div th:text="${reservation.storeAddress.getCity()}"></div>
-        <div th:text="${reservation.storeAddress.getStreet()}"></div>
-    </div>
+    <div class="container">
+        <h1 class="title">예약 상세 정보</h1>
+        <div class="detail-item">
+            <label>예약번호:</label>
+            <div th:text="${reservation.id}"></div>
+        </div>
+        <div class="detail-item">
+            <label>상호명:</label>
+            <div th:text="${reservation.storeName}"></div>
+        </div>
+        <div class="detail-item">
+            <label>예약 시간:</label>
+            <div th:text="${#temporals.format(reservation.reservationTime, 'yyyy-MM-dd HH:mm')}"></div>
+        </div>
+        <div class="detail-item">
+            <label>인원:</label>
+            <div th:text="${reservation.partySize}"></div>
+        </div>
+        <div class="detail-item">
+            <label>예약 상태:</label>
+            <div th:text="${reservation.reservationStatus.getDescription()}"></div>
+        </div>
+        <div class="detail-item">
+            <label>메모:</label>
+            <div th:text="${reservation.memo}"></div>
+        </div>
+        <div class="detail-item">
+            <label>가게 연락처:</label>
+            <div th:text="${reservation.storePhone}"></div>
+        </div>
+        <div class="detail-item">
+            <label>가게 주소:</label>
+            <div th:text="${reservation.storeAddress.getCity()}"></div>
+            <div th:text="${reservation.storeAddress.getStreet()}"></div>
+        </div>
 
-    <button type="button" id="pendingBtn" class="statusChangeBtn"
-            th:attr="data-store-id=${reservation.id}, data-action-id='pending'">
-        대기
-    </button>
-    <button type="button" id="approveBtn" class="statusChangeBtn"
-            th:attr="data-store-id=${reservation.id}, data-action-id='approve'">
-        예약 승인
-    </button>
-    <button type="button" id="rejectBtn" class="statusChangeBtn"
-            th:attr="data-store-id=${reservation.id}, data-action-id='reject'">
-        예약 거절
-    </button>
+        <button type="button" id="pendingBtn" class="statusChangeBtn"
+                th:attr="data-store-id=${reservation.id}, data-action-id='pending'">
+            대기
+        </button>
+        <button type="button" id="approveBtn" class="statusChangeBtn"
+                th:attr="data-store-id=${reservation.id}, data-action-id='approve'">
+            예약 승인
+        </button>
+        <button type="button" id="rejectBtn" class="statusChangeBtn"
+                th:attr="data-store-id=${reservation.id}, data-action-id='reject'">
+            예약 거절
+        </button>
 
-    <button type="button" id="confirmBtn" class="statusChangeBtn"
-            th:attr="data-store-id=${reservation.id}, data-action-id='confirm'">
-        예약 확정
-    </button>
-    <button type="button" id="completeBtn" class="statusChangeBtn"
-            th:attr="data-store-id=${reservation.id}, data-action-id='complete'">
-        예약 완료
-    </button>
-    <button type="button" id="cancelBtn" class="statusChangeBtn"
-            th:attr="data-store-id=${reservation.id}, data-action-id='cancel'">
-        예약 취소
-    </button>
-    <button type="button" id="noshowBtn" class="statusChangeBtn"
-            th:attr="data-store-id=${reservation.id}, data-action-id='noshow'">
-        노쇼
-    </button>
+        <button type="button" id="confirmBtn" class="statusChangeBtn"
+                th:attr="data-store-id=${reservation.id}, data-action-id='confirm'">
+            예약 확정
+        </button>
+        <button type="button" id="completeBtn" class="statusChangeBtn"
+                th:attr="data-store-id=${reservation.id}, data-action-id='complete'">
+            예약 완료
+        </button>
+        <button type="button" id="cancelBtn" class="statusChangeBtn"
+                th:attr="data-store-id=${reservation.id}, data-action-id='cancel'">
+            예약 취소
+        </button>
+        <button type="button" id="noshowBtn" class="statusChangeBtn"
+                th:attr="data-store-id=${reservation.id}, data-action-id='noshow'">
+            노쇼
+        </button>
+    </div>
+    <a href="/">HOME</a>
 </div>
-<a href="/">HOME</a>
 <script>
     document.querySelectorAll('.statusChangeBtn').forEach(btn => {
 

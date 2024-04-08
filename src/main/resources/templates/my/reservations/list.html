@@ -31,25 +31,28 @@
 </style>
 <link rel="stylesheet" th:href="@{/css/general.css}"/>
 <body>
-<table>
-    <thead>
-    <tr>
-        <th>예약 날짜</th>
-        <th>상호명</th>
-        <th>인원</th>
-        <th>예약 상태</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr class="clickable-row" th:each="reservation : ${reservationList}" th:data-id="${reservation.id}">
-        <td th:text="${#temporals.format(reservation.reservationTime, 'yyyy-MM-dd HH:mm')}"></td>
-        <td th:text="${reservation.storeName}"></td>
-        <td th:text="${reservation.partySize}"></td>
-        <td th:text="${reservation.reservationStatus.getDescription()}"></td>
-    </tr>
-    </tbody>
-</table>
-<a href="/">HOME</a>
+<div class="main-container">
+
+    <table>
+        <thead>
+        <tr>
+            <th>예약 날짜</th>
+            <th>상호명</th>
+            <th>인원</th>
+            <th>예약 상태</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="clickable-row" th:each="reservation : ${reservationList}" th:data-id="${reservation.id}">
+            <td th:text="${#temporals.format(reservation.reservationTime, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${reservation.storeName}"></td>
+            <td th:text="${reservation.partySize}"></td>
+            <td th:text="${reservation.reservationStatus.getDescription()}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="/">HOME</a>
+</div>
 </body>
 
 <script>

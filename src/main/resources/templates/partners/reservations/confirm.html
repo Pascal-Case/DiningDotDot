@@ -48,28 +48,30 @@
 
 </style>
 <body>
-<!-- 성공 메시지 -->
-<div th:if="${successMessage}" th:text="${successMessage}" class="alert alert-success"></div>
-<!-- 에러 메시지 -->
-<div th:if="${errorMessage}" th:text="${errorMessage}" class="alert alert-danger"></div>
+<div class="main-container">
 
-<!-- 예약 확인 섹션 -->
-<div class="reservation-confirmation">
-    <h1>예약 확인</h1>
-    <p>예약 번호를 입력해 주세요.</p>
+    <!-- 성공 메시지 -->
+    <div th:if="${successMessage}" th:text="${successMessage}" class="alert alert-success"></div>
+    <!-- 에러 메시지 -->
+    <div th:if="${errorMessage}" th:text="${errorMessage}" class="alert alert-danger"></div>
 
-    <label for="confirmationNumber"></label>
-    <input type="text" id="confirmationNumber" readonly/>
+    <!-- 예약 확인 섹션 -->
+    <div class="reservation-confirmation">
+        <h1>예약 확인</h1>
+        <p>예약 번호를 입력해 주세요.</p>
 
-    <div class="number-pad">
-        <button th:each="num : ${#numbers.sequence(1,9)}" th:text="${num}"
-                th:onclick="'addNumber(' + ${num} + ');'"></button>
-        <button onclick="removeNumber();">&larr;</button>
-        <button onclick="addNumber('0');">0</button>
-        <button id="confirmReservationBtn">&#10004;</button>
+        <label for="confirmationNumber"></label>
+        <input type="text" id="confirmationNumber" readonly/>
+
+        <div class="number-pad">
+            <button th:each="num : ${#numbers.sequence(1,9)}" th:text="${num}"
+                    th:onclick="'addNumber(' + ${num} + ');'"></button>
+            <button onclick="removeNumber();">&larr;</button>
+            <button onclick="addNumber('0');">0</button>
+            <button id="confirmReservationBtn">&#10004;</button>
+        </div>
     </div>
 </div>
-
 <script>
 
     const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
