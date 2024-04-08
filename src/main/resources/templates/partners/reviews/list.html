@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>리뷰</title>
     <link rel="stylesheet" th:href="@{/css/general.css}"/>
 </head>
 <style>
@@ -31,25 +31,27 @@
 </style>
 <link rel="stylesheet" th:href="@{/css/general.css}"/>
 <body>
-<table>
-    <thead>
-    <tr>
-        <th>방문 날짜</th>
-        <th>상호명</th>
-        <th>별점</th>
-        <th>작성 날짜</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr class="clickable-row" th:each="review : ${reviews}" th:data-id="${review.reviewId}">
-        <td th:text="${#temporals.format(review.visitDate, 'yyyy-MM-dd HH:mm')}"></td>
-        <td th:text="${review.storeName}"></td>
-        <td th:text="${review.rating}"></td>
-        <td th:text="${#temporals.format(review.postDate, 'yyyy-MM-dd HH:mm')}"></td>
-    </tr>
-    </tbody>
-</table>
-<a href="/">HOME</a>
+<div class="main-container">
+    <table>
+        <thead>
+        <tr>
+            <th>방문 날짜</th>
+            <th>상호명</th>
+            <th>별점</th>
+            <th>작성 날짜</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="clickable-row" th:each="review : ${reviews}" th:data-id="${review.reviewId}">
+            <td th:text="${#temporals.format(review.visitDate, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${review.storeName}"></td>
+            <td th:text="${review.rating}"></td>
+            <td th:text="${#temporals.format(review.postDate, 'yyyy-MM-dd HH:mm')}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="/">HOME</a>
+</div>
 </body>
 
 <script>

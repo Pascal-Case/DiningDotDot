@@ -8,6 +8,16 @@
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link rel="stylesheet" th:href="@{/css/general.css}">
 </head>
+<style>
+    .btn-container {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #deleteButton {
+        margin-left: 10px;
+    }
+</style>
 <body>
 <div class="main-container">
 
@@ -38,23 +48,23 @@
             <span th:text="${#temporals.format(reviewDetail.postDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
         </div>
 
-        <!-- 리뷰 오너만 수정 가능 -->
-        <div th:if="${isReviewOwner}">
-            <button type="button" id="editButton" th:attr="data-review-id=${reviewDetail.reviewId}">
-                수정
-            </button>
+        <div class="btn-container">
+            <!-- 리뷰 오너만 수정 가능 -->
+            <div th:if="${isReviewOwner}">
+                <button type="button" id="editButton" th:attr="data-review-id=${reviewDetail.reviewId}">
+                    수정
+                </button>
+            </div>
+            <!-- 리뷰 오너 및 매장 관리자만 삭제 가능 -->
+            <div th:if="${isReviewOwner || isStoreManager}">
+                <button type="button" id="deleteButton"
+                        th:attr="data-review-id=${reviewDetail.reviewId}, data-store-id=${reviewDetail.storeId}">
+                    삭제
+                </button>
+            </div>
         </div>
 
-        <!-- 리뷰 오너 및 매장 관리자만 삭제 가능 -->
-        <div th:if="${isReviewOwner || isStoreManager}">
-            <button type="button" id="deleteButton"
-                    th:attr="data-review-id=${reviewDetail.reviewId}, data-store-id=${reviewDetail.storeId}">
-                삭제
-            </button>
-
-        </div>
-
-
+        <a href="/">HOME</a>
     </div>
 </div>
 <script>

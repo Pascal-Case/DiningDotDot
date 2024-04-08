@@ -3,6 +3,7 @@ package jyang.diningdotdot.controller;
 import jyang.diningdotdot.config.AuthenticationFacade;
 import jyang.diningdotdot.dto.reservation.ReservationDTO;
 import jyang.diningdotdot.dto.review.ReviewDetailDTO;
+import jyang.diningdotdot.dto.review.ReviewListDTO;
 import jyang.diningdotdot.dto.store.StoreDetailDTO;
 import jyang.diningdotdot.dto.store.StoreListDTO;
 import jyang.diningdotdot.repository.ReviewRepository;
@@ -15,6 +16,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -73,5 +76,12 @@ public class StoreController {
         model.addAttribute("isStoreManager", isStoreManager);
         model.addAttribute("reviewDetail", reviewDetail);
         return "/stores/review";
+    }
+
+    @GetMapping("{storeId}/reviews")
+    public String storeReviewListPage(Model model, @PathVariable Long storeId) {
+        List<ReviewListDTO> reviews = reviewService.getStoreReviews(storeId);
+        model.addAttribute("reviews", reviews);
+        return "stores/reviewList";
     }
 }

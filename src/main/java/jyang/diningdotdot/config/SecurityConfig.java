@@ -32,7 +32,7 @@ public class SecurityConfig {
                                 "/partners/join", "/partners/joinProc").permitAll()
                         .requestMatchers("/js/**", "/css/**", "/img/**").permitAll() // 정적 파일
                         .requestMatchers("/admin").hasRole("ADMIN")
-                        .requestMatchers("/partners/reservations/**", "/partners/stores/**").hasRole("MANAGER")
+                        .requestMatchers("/partners/reservations/**", "/partners/stores/**", "/partners/reviews/**").hasRole("MANAGER")
                         .anyRequest().authenticated() // 그외 경로는 로그인 사용자만 허용
                 );
         http.

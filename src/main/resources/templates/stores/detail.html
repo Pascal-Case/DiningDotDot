@@ -2,34 +2,41 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>매장 상세</title>
     <link rel="stylesheet" th:href="@{/css/general.css}"/>
     <link rel="stylesheet" th:href="@{/css/modal.css}"/>
 </head>
 <body>
 <div class="main-container">
     <div>
-        <h2>Store Information</h2>
-        <p><strong>Name:</strong> <span th:text="${storeDetail.storeListDTO.name}"></span></p>
-        <p><strong>Category:</strong> <span th:text="${storeDetail.storeListDTO.categoryName}"></span></p>
-        <p><strong>Capacity:</strong> <span th:text="${storeDetail.storeListDTO.capacity}"></span></p>
-        <p><strong>Open Time:</strong> <span th:text="${storeDetail.storeListDTO.openTime}"></span></p>
-        <p><strong>Close Time:</strong> <span th:text="${storeDetail.storeListDTO.closeTime}"></span></p>
-        <p><strong>Last Order Time:</strong> <span th:text="${storeDetail.storeListDTO.lastOrderTime}"></span></p>
-        <p><strong>Phone:</strong> <span th:text="${storeDetail.storeListDTO.phone}"></span></p>
-        <p><strong>Description:</strong> <span th:text="${storeDetail.storeListDTO.description}"></span></p>
+        <h2>매장 정보</h2>
+        <p><strong>상호명:</strong> <span th:text="${storeDetail.storeListDTO.name}"></span></p>
+        <p><strong>카테고리:</strong> <span th:text="${storeDetail.storeListDTO.categoryName}"></span></p>
+        <p><strong>수용인원:</strong> <span th:text="${storeDetail.storeListDTO.capacity}"></span></p>
+        <p><strong>오픈 시간:</strong> <span th:text="${storeDetail.storeListDTO.openTime}"></span></p>
+        <p><strong>마감 시간:</strong> <span th:text="${storeDetail.storeListDTO.closeTime}"></span></p>
+        <p><strong>라스트오더:</strong> <span th:text="${storeDetail.storeListDTO.lastOrderTime}"></span></p>
+        <p><strong>연락처:</strong> <span th:text="${storeDetail.storeListDTO.phone}"></span></p>
+        <p><strong>설명:</strong> <span th:text="${storeDetail.storeListDTO.description}"></span></p>
 
-        <h2>Location Information</h2>
-        <p><strong>City:</strong> <span th:text="${storeDetail.city}"></span></p>
-        <p><strong>Street:</strong> <span th:text="${storeDetail.street}"></span></p>
-        <p><strong>Zipcode:</strong> <span th:text="${storeDetail.zipcode}"></span></p>
+        <h2>주소</h2>
+        <p><strong>시:</strong> <span th:text="${storeDetail.city}"></span></p>
+        <p><strong>도로명:</strong> <span th:text="${storeDetail.street}"></span></p>
+        <p><strong>우편번호:</strong> <span th:text="${storeDetail.zipcode}"></span></p>
 
-        <h2>Additional Information</h2>
-        <p><strong>Rating:</strong> <span th:text="${storeDetail.rating}"></span></p>
+        <h2>기타 정보</h2>
+        <p><strong>평점:</strong> <span th:text="${storeDetail.rating}"></span></p>
 
         <button type="button" id="showReservationFormBtn">
             예약하기
         </button>
+
+        <button type="button" id="showReviewBtn" th:attr="data-store-id=${storeDetail.getStoreListDTO().id}">
+            리뷰보기
+        </button>
+        <div>
+            <a href="/">HOME</a>
+        </div>
     </div>
 
     <div id="reservationFormModal" class="modal">
@@ -73,7 +80,7 @@
     const modal = document.getElementById('reservationFormModal');
     const showModalBtn = document.getElementById('showReservationFormBtn');
     const closeModalBtn = document.getElementById('closeReservationFormBtn');
-
+    const showReviewBtn = document.getElementById('showReviewBtn');
     showModalBtn.onclick = function () {
         modal.style.display = 'block';
     }
@@ -87,6 +94,11 @@
             modal.style.display = 'none';
         }
     }
+
+    showReviewBtn.addEventListener('click', function () {
+        const storeId = this.getAttribute('data-store-id');
+        window.location.href = `/stores/${storeId}/reviews`;
+    })
 </script>
 
 </html>

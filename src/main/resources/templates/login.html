@@ -6,28 +6,106 @@
     <title>로그인</title>
     <link rel="stylesheet" th:href="@{/css/general.css}"/>
     <script src="https://kit.fontawesome.com/d35b097dab.js" crossorigin="anonymous"></script>
+    <style>
+        .login-btn-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .login-btn {
+            width: 400px;
+        }
+
+        .sns-login {
+            margin-top: 30px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .sns-login div {
+            margin-top: 15px;
+        }
+
+        .sns-login div a {
+            width: 400px;
+            border: 1px solid #eeeeee;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            margin: auto;
+            justify-content: center;
+        }
+
+        .sns-login div img {
+            width: 50px;
+        }
+
+        .sns-login div span {
+            padding: 0 10px;
+        }
+
+        .kakao a {
+            background-color: #fddc3f;
+            color: rgb(0, 0, 0);
+        }
+
+        .naver a {
+            color: white;
+            background-color: #00c73c;
+        }
+
+        .join {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .join a {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
 <div class="main-container">
     <h1>로그인</h1>
 
-    <a href="/oauth2/authorization/naver">naver login</a><br>
-    <a href="/oauth2/authorization/kakao">kakao login</a><br>
-
     <form action="/loginProc" method="post" th:object="${loginForm}" name="loginForm">
         <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
         <!-- Email 필드 -->
-        <label for="username">이메일:</label>
+        <label for="username">이메일</label>
         <input type="email" id="username" name="username" required>
 
         <br><br>
         <!-- 비밀번호 필드 -->
-        <label for="password">비밀번호:</label>
+        <label for="password">비밀번호</label>
         <input type="password" id="password" name="password" required minlength="8">
         <br><br>
-        <input type="submit" value="Login">
+        <div class="login-btn-container">
+            <input class="login-btn" type="submit" value="Login">
+        </div>
     </form>
-    <a href="/">HOME</a>
+
+    <div class="sns-login">
+        <div class="kakao">
+            <a href="/oauth2/authorization/kakao">
+                <img src="./img/kakao.png" alt=""/><span>카카오 로그인</span>
+            </a>
+        </div>
+        <div class="naver">
+            <a href="/oauth2/authorization/naver">
+                <img src="./img/naver.png" alt=""/><span>네이버 로그인</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="join">
+        <div>
+            <a href="/users/join">일반회원 가입</a>
+        </div>
+        <div>
+            <a href="/partners/join">파트너 가입</a>
+        </div>
+    </div>
 </div>
 </body>
 </html>

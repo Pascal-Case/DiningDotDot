@@ -2,7 +2,7 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>예약</title>
     <link rel="stylesheet" th:href="@{/css/general.css}"/>
 </head>
 <style>
@@ -28,21 +28,28 @@
     .clickable-row:hover {
         background-color: #f5f5f5;
     }
+
+    .status-filter {
+        display: flex;
+        justify-content: space-between;
+    }
 </style>
 <body>
 <div class="main-container">
-
+    <a href="/">HOME</a>
     <form th:action="@{/partners/reservations/filter}" method="post">
-        <div>
-            <label><input type="checkbox" name="status" value="PENDING" checked> 대기</label>
-            <label><input type="checkbox" name="status" value="APPROVED"> 승인</label>
-            <label><input type="checkbox" name="status" value="REJECTED"> 거절</label>
-            <label><input type="checkbox" name="status" value="CONFIRMED"> 확정</label>
-            <label><input type="checkbox" name="status" value="CANCELLED"> 취소</label>
-            <label><input type="checkbox" name="status" value="COMPLETED"> 완료</label>
-            <label><input type="checkbox" name="status" value="NOSHOW"> 노쇼</label>
+        <div class="status-filter">
+            <div>
+                <label><input type="checkbox" name="status" value="PENDING" checked> 대기</label>
+                <label><input type="checkbox" name="status" value="APPROVED"> 승인</label>
+                <label><input type="checkbox" name="status" value="REJECTED"> 거절</label>
+                <label><input type="checkbox" name="status" value="CONFIRMED"> 확정</label>
+                <label><input type="checkbox" name="status" value="CANCELLED"> 취소</label>
+                <label><input type="checkbox" name="status" value="COMPLETED"> 완료</label>
+                <label><input type="checkbox" name="status" value="NOSHOW"> 노쇼</label>
+            </div>
+            <button type="submit">상태별 예약 조회</button>
         </div>
-        <button type="submit">상태별 예약 조회</button>
     </form>
 
     <table>

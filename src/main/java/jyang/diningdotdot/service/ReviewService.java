@@ -131,6 +131,18 @@ public class ReviewService {
                 .toList();
     }
 
+    /**
+     * 해당 가게 리뷰 전체 가져오기
+     *
+     * @param storeId 매장 id
+     * @return 리뷰 dto 리스트
+     */
+    public List<ReviewListDTO> getStoreReviews(Long storeId) {
+        return reviewRepository.findAllByStoreId(storeId)
+                .stream().map(ReviewListDTO::fromEntity)
+                .toList();
+    }
+
     // 리뷰 id로 리뷰 가져오기
     private Review getReview(Long reviewId) {
         return reviewRepository.findById(reviewId)

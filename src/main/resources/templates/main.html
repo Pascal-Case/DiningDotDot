@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Create User</title>
+    <title>DiningDotDot!</title>
     <link rel="stylesheet" th:href="@{/css/general.css}"/>
 </head>
 <body>
@@ -12,29 +12,16 @@
     </div>
 
     <div th:if="${id != null}">
-        <p><strong>ID:</strong> <span th:text="${id}">User ID</span></p>
-        <p><strong>Username:</strong> <span th:text="${username}">Username</span></p>
-        <p><strong>Name:</strong> <span th:text="${name}">User Name</span></p>
+        <p><strong>이메일:</strong> <span th:text="${username}">Username</span></p>
+        <p><strong>이름:</strong> <span th:text="${name}">User Name</span></p>
     </div>
-
-
-    <div>
-        <a href="/login">로그인</a>
-        <br><br>
-        <a href="/users/join">일반회원 가입</a>
-        <br><br>
-        <a href="/partners/join">파트너 가입</a> | <a href="/login">파트너 로그인</a>
-        <br><br>
-        <a href="/logout">로그아웃</a>
-    </div>
-
 
     <div>
         <h3>전체 이용 메뉴</h3>
-        <a href="/stores">전체 매장 목록</a> |
+        <a href="/stores">전체 매장 목록</a>
     </div>
 
-    <div>
+    <div sec:authorize="hasAnyAuthority('ROLE_MANAGER', 'ROLE_ADMIN')">
         <h3>매니저 전용 메뉴</h3>
         <a href="/partners/stores">관리 매장 목록</a> |
         <a href="/partners/reservations">예약 관리</a> |
@@ -42,10 +29,14 @@
         <a href="/partners/reviews">매장 리뷰 관리</a> |
     </div>
 
-    <div>
+    <div sec:authorize="isAuthenticated()">
         <h3>마이 메뉴</h3>
         <a href="/my/reservations">내 예약 현황</a> |
         <a href="/my/reviews">내 리뷰</a>
+    </div>
+
+    <div>
+        <a href="/logout">로그아웃</a>
     </div>
 </div>
 </body>

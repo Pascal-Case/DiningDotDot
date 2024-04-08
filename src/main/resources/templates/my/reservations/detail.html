@@ -4,16 +4,10 @@
     <meta charset="UTF-8">
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <title>Title</title>
+    <title>예약 상세</title>
     <link rel="stylesheet" th:href="@{/css/general.css}"/>
+    <link rel="stylesheet" th:href="@{/css/modal.css}"/>
     <style>
-        .container {
-            max-width: 600px;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
 
         .title {
             text-align: center;
@@ -31,43 +25,6 @@
         .detail-item div {
             margin-left: 10px;
         }
-    </style>
-    <style>
-        /* 모달 스타일 */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0, 0, 0);
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
 
         .star {
             cursor: pointer;
@@ -78,58 +35,64 @@
         .star.selected {
             color: gold;
         }
+
+        #reviewForm {
+            display: flex;
+            align-items: stretch;
+            flex-wrap: wrap;
+            flex-direction: column;
+            justify-content: space-around;
+        }
     </style>
 </head>
 <body>
 <div class="main-container">
-
-    <div class="container">
-        <h1 class="title">예약 상세 정보</h1>
-        <div class="detail-item">
-            <label>예약번호:</label>
-            <div th:text="${reservation.id}"></div>
-        </div>
-        <div class="detail-item">
-            <label>상호명:</label>
-            <div th:text="${reservation.storeName}"></div>
-        </div>
-        <div class="detail-item">
-            <label>예약 시간:</label>
-            <div th:text="${#temporals.format(reservation.reservationTime, 'yyyy-MM-dd HH:mm')}"></div>
-        </div>
-        <div class="detail-item">
-            <label>인원:</label>
-            <div th:text="${reservation.partySize}"></div>
-        </div>
-        <div class="detail-item">
-            <label>예약 상태:</label>
-            <div th:text="${reservation.reservationStatus.getDescription()}"></div>
-        </div>
-        <div class="detail-item">
-            <label>메모:</label>
-            <div th:text="${reservation.memo}"></div>
-        </div>
-        <div class="detail-item">
-            <label>가게 연락처:</label>
-            <div th:text="${reservation.storePhone}"></div>
-        </div>
-        <div class="detail-item">
-            <label>가게 주소:</label>
-            <div th:text="${reservation.storeAddress.getCity()}"></div>
-            <div th:text="${reservation.storeAddress.getStreet()}"></div>
-        </div>
-
-        <button type="button" id="cancelBtn" th:attr="data-store-id=${reservation.id}"
-                th:disabled="${reservation.reservationStatus.name() != 'PENDING'}">
-            예약 취소
-        </button>
-
-        <button type="button" id="reviewBtn" th:attr="data-store-id=${reservation.id}"
-                th:disabled="${reservation.reservationStatus.name() != 'CONFIRMED'
-            && reservation.reservationStatus.name() != 'COMPLETED'}">
-            리뷰 작성
-        </button>
+    <h1 class="title">예약 상세 정보</h1>
+    <div class="detail-item">
+        <label>예약번호:</label>
+        <div th:text="${reservation.id}"></div>
     </div>
+    <div class="detail-item">
+        <label>상호명:</label>
+        <div th:text="${reservation.storeName}"></div>
+    </div>
+    <div class="detail-item">
+        <label>예약 시간:</label>
+        <div th:text="${#temporals.format(reservation.reservationTime, 'yyyy-MM-dd HH:mm')}"></div>
+    </div>
+    <div class="detail-item">
+        <label>인원:</label>
+        <div th:text="${reservation.partySize}"></div>
+    </div>
+    <div class="detail-item">
+        <label>예약 상태:</label>
+        <div th:text="${reservation.reservationStatus.getDescription()}"></div>
+    </div>
+    <div class="detail-item">
+        <label>메모:</label>
+        <div th:text="${reservation.memo}"></div>
+    </div>
+    <div class="detail-item">
+        <label>가게 연락처:</label>
+        <div th:text="${reservation.storePhone}"></div>
+    </div>
+    <div class="detail-item">
+        <label>가게 주소:</label>
+        <div th:text="${reservation.storeAddress.getCity()}"></div>
+        <div th:text="${reservation.storeAddress.getStreet()}"></div>
+    </div>
+
+    <button type="button" id="cancelBtn" th:attr="data-store-id=${reservation.id}"
+            th:disabled="${reservation.reservationStatus.name() != 'PENDING'}">
+        예약 취소
+    </button>
+
+    <button type="button" id="reviewBtn" th:attr="data-store-id=${reservation.id}"
+            th:disabled="${reservation.reservationStatus.name() != 'CONFIRMED'
+            && reservation.reservationStatus.name() != 'COMPLETED'}">
+        리뷰 작성
+    </button>
+
 
     <!-- 리뷰 모달 -->
     <div id="reviewModal" class="modal" style="display:none;">
@@ -138,15 +101,19 @@
             <form id="reviewForm" th:action="@{/my/reviews}" th:object="${reviewDTO}" method="post">
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
                 <input type="hidden" name="reservationId" th:value="${reservation.getId()}"/>
-                <label for="content">리뷰</label>
-                <textarea id="content" th:field="*{content}"></textarea>
-                <label>별점:</label>
-                <div id="star-rating">
-                    <span class="star" data-value="1.0">&#9733;</span>
-                    <span class="star" data-value="2.0">&#9733;</span>
-                    <span class="star" data-value="3.0">&#9733;</span>
-                    <span class="star" data-value="4.0">&#9733;</span>
-                    <span class="star" data-value="5.0">&#9733;</span>
+                <div>
+                    <label for="content"></label>
+                    <textarea id="content" th:field="*{content}"></textarea>
+                </div>
+                <div>
+                    <label>별점:</label>
+                    <div id="star-rating">
+                        <span class="star" data-value="1.0">&#9733;</span>
+                        <span class="star" data-value="2.0">&#9733;</span>
+                        <span class="star" data-value="3.0">&#9733;</span>
+                        <span class="star" data-value="4.0">&#9733;</span>
+                        <span class="star" data-value="5.0">&#9733;</span>
+                    </div>
                 </div>
                 <input type="hidden" id="ratingInput" th:field="*{rating}"/>
                 <button type="submit">리뷰 제출</button>
@@ -154,7 +121,9 @@
         </div>
     </div>
 
-    <a href="/">HOME</a>
+    <div>
+        <a href="/">HOME</a>
+    </div>
 </div>
 <script>
     const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');

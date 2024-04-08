@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>리뷰 수정</title>
     <link rel="stylesheet" th:href="@{/css/general.css}"/>
 </head>
 <style>
@@ -17,28 +17,31 @@
     }
 </style>
 <body>
-<form action="/my/reviews/update" method="post">
-    <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-    <input type="hidden" name="reviewId" th:value="${reviewUpdateDTO.reviewId}"/>
-    <div>
-        <label for="content">리뷰 내용</label>
-        <textarea id="content" name="content" th:text="${reviewUpdateDTO.content}"></textarea>
-    </div>
-    <div>
-        <label>별점:</label>
-        <div id="star-rating">
-            <span class="star" data-value="1.0">&#9733;</span>
-            <span class="star" data-value="2.0">&#9733;</span>
-            <span class="star" data-value="3.0">&#9733;</span>
-            <span class="star" data-value="4.0">&#9733;</span>
-            <span class="star" data-value="5.0">&#9733;</span>
+<div class="main-container">
+    <a href="/">HOME</a>
+    <form action="/my/reviews/update" method="post">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+        <input type="hidden" name="reviewId" th:value="${reviewUpdateDTO.reviewId}"/>
+        <div>
+            <label for="content">리뷰 내용</label>
+            <textarea id="content" name="content" th:text="${reviewUpdateDTO.content}"></textarea>
         </div>
-        <label for="rating"></label>
-        <input type="hidden" id="rating" name="rating" th:value="${reviewUpdateDTO.rating}"/>
-    </div>
+        <div>
+            <label>별점:</label>
+            <div id="star-rating">
+                <span class="star" data-value="1.0">&#9733;</span>
+                <span class="star" data-value="2.0">&#9733;</span>
+                <span class="star" data-value="3.0">&#9733;</span>
+                <span class="star" data-value="4.0">&#9733;</span>
+                <span class="star" data-value="5.0">&#9733;</span>
+            </div>
+            <label for="rating"></label>
+            <input type="hidden" id="rating" name="rating" th:value="${reviewUpdateDTO.rating}"/>
+        </div>
 
-    <button type="submit">수정하기</button>
-</form>
+        <button type="submit">수정하기</button>
+    </form>
+</div>
 </body>
 
 <script>
