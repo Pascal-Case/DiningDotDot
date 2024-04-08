@@ -14,10 +14,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -32,8 +29,9 @@ public class StoreController {
     @GetMapping
     public String storeListPage(
             Model model,
-            @PageableDefault(size = 4) Pageable pageable) {
-        Slice<StoreListDTO> storeSlice = storeService.getStoreSlice(pageable);
+            @PageableDefault(size = 4) Pageable pageable,
+            @RequestParam(required = false) String query) {
+        Slice<StoreListDTO> storeSlice = storeService.searchStoresByQuery(query, pageable);
         model.addAttribute("storeSlice", storeSlice);
         return "stores/list";
     }
@@ -53,14 +51,15 @@ public class StoreController {
     @GetMapping("/slice")
     @ResponseBody
     public Slice<StoreListDTO> getStoresSlice(
-            @PageableDefault Pageable pageable) {
-        return storeService.getStoreSlice(pageable);
+            @PageableDefault(size = 4) Pageable pageable,
+            @RequestParam(required = false) String query) {
+        return storeService.searchStoresByQuery(query, pageable);
     }
 
     @GetMapping("/reviews/{reviewId}")
     public String reviewDetailPage(Model model, @PathVariable Long reviewId) {
         ReviewDetailDTO reviewDetail = reviewService.getReviewDetail(reviewId);
-        
+
         boolean isReviewOwner = reviewDetail.getReviewerUsername()
                 .equals(authenticationFacade.getCurrentUsername());
         boolean isStoreManager = reviewRepository.

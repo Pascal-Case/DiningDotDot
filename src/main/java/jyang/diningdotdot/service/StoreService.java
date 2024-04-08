@@ -73,12 +73,20 @@ public class StoreService {
                 .toList();
     }
 
-    public Slice<StoreListDTO> getStoreSlice(Pageable pageable) {
+    public Slice<StoreListDTO> getStoreSlice(String query, Pageable pageable) {
         Slice<Store> storeSlice = storeRepository.findAll(pageable);
         List<StoreListDTO> storeList = storeSlice.getContent().stream()
                 .map(StoreListDTO::fromEntity)
                 .toList();
         return new SliceImpl<>(storeList, pageable, storeSlice.hasNext());
+    }
+
+    public Slice<StoreListDTO> searchStoresByQuery(String query, Pageable pageable) {
+        if (query == null || query.trim().isEmpty()) {
+            return storeRepository.findAll(pageable).map(StoreListDTO::fromEntity);
+        } else {
+            return storeRepository.findByQuery(query, pageable).map(StoreListDTO::fromEntity);
+        }
     }
 
     public StoreDTO getStoreDtoById(Long id) {
