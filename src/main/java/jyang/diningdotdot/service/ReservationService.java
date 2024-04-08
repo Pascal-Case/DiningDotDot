@@ -15,6 +15,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static jyang.diningdotdot.entity.reservation.ReservationStatus.APPROVED;
@@ -80,6 +81,12 @@ public class ReservationService {
                 .filter(res -> res.getStore().getPartner().getId().equals(currentUserId))
                 .filter(res -> res.getReservationStatus().equals(APPROVED))
                 .orElseThrow(() -> new AccessDeniedException("You do not have permission to view this reservation."));
+
+        // 예약 시간에서 10분을 뺀 시간이 현재 시간보다 이전인지 확인
+        if (reservation.getReservationTime().minusMinutes(10).isBefore(LocalDateTime.now())) {
+            throw new IllegalStateException("예약 시간 10분전 까지만 예약을 확정 할 수 있습니다.\n직원에서 문의해 주세요.");
+        }
+
         reservation.setToConfirmed();
     }
 

@@ -106,7 +106,6 @@
             const url = `/partners/reservations/confirm/${reservationId}`
 
             if (confirm('예약을 확정하시겠습니까?')) {
-                console.log(url);
                 fetch(url, {
                     method: 'POST',
                     headers: {
@@ -115,14 +114,17 @@
                     }
                 })
                     .then(response => {
-                        if (response.ok) {
-                            alert('예약을 성공적으로 확정하였습니다.');
-                            window.location.href = '/partners/reservations/confirm';
-                        } else {
-                            alert('예약을 확정하는 도중 에러가 발생했습니다.');
-                        }
+                        return response.json();
                     })
-                    .catch(error => console.error('Error:', error));
+                    .then(data => {
+                        alert(data.message);
+                        window.location.href = '/partners/reservations/confirm';
+                    })
+                    .catch(error => {
+                            console.error('Error:', error)
+                            alert(error.message);
+                        }
+                    );
             }
         })
     });

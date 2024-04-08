@@ -6,6 +6,7 @@ import jyang.diningdotdot.dto.reservation.ReservationListDTO;
 import jyang.diningdotdot.entity.reservation.ReservationStatus;
 import jyang.diningdotdot.service.ReservationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
@@ -56,13 +58,6 @@ public class PartnerReservationController {
         Long currentUserId = authenticationFacade.getCurrentUserId();
         ReservationStatus status = ReservationStatus.fromAction(action);
         reservationService.changeReservationStatus(reservationId, currentUserId, status);
-//        try {
-//
-//
-//            redirectAttributes.addFlashAttribute("successMessage", "예약 상태가 성공적으로 변경되었습니다.");
-//        } catch (Exception e) {
-//            redirectAttributes.addFlashAttribute("errorMessage", "예약 상태 변경에 실패했습니다.");
-//        }
         return "redirect:/partners/reservations";
     }
 
@@ -74,9 +69,13 @@ public class PartnerReservationController {
     @PostMapping("/confirm/{reservationId}")
     public ResponseEntity<?> confirmReservation(@PathVariable Long reservationId
     ) {
-        Long currentUserId = authenticationFacade.getCurrentUserId();
-        reservationService.confirmProcess(reservationId, currentUserId);
-        return ResponseEntity.ok().build();
+        try {
+            Long currentUserId = authenticationFacade.getCurrentUserId();
+            reservationService.confirmProcess(reservationId, currentUserId);
+            return ResponseEntity.ok(Map.of("message", "예약을 성공적으로 확정하였습니다."));
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", e.getMessage()));
+        }
     }
 
 }
