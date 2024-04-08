@@ -37,14 +37,14 @@
     </div>
 
     <!-- 리뷰 오너만 수정 가능 -->
-    <div th:if="${isOwner}">
+    <div th:if="${isReviewOwner}">
         <button type="button" id="editButton" th:attr="data-review-id=${reviewDetail.reviewId}">
             수정
         </button>
     </div>
 
     <!-- 리뷰 오너 및 매장 관리자만 삭제 가능 -->
-    <div th:if="${isOwner}">
+    <div th:if="${isReviewOwner || isStoreManager}">
         <button type="button" id="deleteButton"
                 th:attr="data-review-id=${reviewDetail.reviewId}, data-store-id=${reviewDetail.storeId}">
             삭제

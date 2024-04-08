@@ -5,6 +5,7 @@ import jyang.diningdotdot.dto.reservation.ReservationDTO;
 import jyang.diningdotdot.dto.review.ReviewDetailDTO;
 import jyang.diningdotdot.dto.store.StoreDetailDTO;
 import jyang.diningdotdot.dto.store.StoreListDTO;
+import jyang.diningdotdot.repository.ReviewRepository;
 import jyang.diningdotdot.service.ReviewService;
 import jyang.diningdotdot.service.StoreService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class StoreController {
 
     private final StoreService storeService;
     private final ReviewService reviewService;
+    private final ReviewRepository reviewRepository;
     private final AuthenticationFacade authenticationFacade;
 
     @GetMapping
@@ -58,9 +60,14 @@ public class StoreController {
     @GetMapping("/reviews/{reviewId}")
     public String reviewDetailPage(Model model, @PathVariable Long reviewId) {
         ReviewDetailDTO reviewDetail = reviewService.getReviewDetail(reviewId);
-        boolean isOwner = reviewDetail.getReviewerUsername()
+        
+        boolean isReviewOwner = reviewDetail.getReviewerUsername()
                 .equals(authenticationFacade.getCurrentUsername());
-        model.addAttribute("isOwner", isOwner);
+        boolean isStoreManager = reviewRepository.
+                existsByReviewIdAndPartnerId(reviewId, authenticationFacade.getCurrentUserId());
+
+        model.addAttribute("isReviewOwner", isReviewOwner);
+        model.addAttribute("isStoreManager", isStoreManager);
         model.addAttribute("reviewDetail", reviewDetail);
         return "/stores/review";
     }

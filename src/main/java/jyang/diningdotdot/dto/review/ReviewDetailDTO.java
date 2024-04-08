@@ -17,6 +17,7 @@ public class ReviewDetailDTO {
     private String storeName;
     private String reviewerName;
     private String reviewerUsername;
+    private String partnerUsername;
     private Double rating;
     private String content;
     private LocalDateTime visitDate;

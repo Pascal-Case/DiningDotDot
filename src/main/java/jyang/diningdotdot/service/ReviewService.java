@@ -31,8 +31,6 @@ public class ReviewService {
     @Transactional
     public void postReview(ReviewDTO reviewDTO, Long userId) {
         Long reservationId = reviewDTO.getReservationId();
-        System.out.println("reservationId = " + reservationId);
-        System.out.println("userId = " + userId);
         // 유효한 예약인지 확인
         reservationService.checkIsReservationOwner(reservationId, userId);
 
@@ -119,6 +117,18 @@ public class ReviewService {
         }
 
         review.updateReview(reviewUpdateDTO);
+    }
+
+    /**
+     * 내 가게의 리뷰 가져오기
+     *
+     * @param partnerId 파트너 id
+     * @return 리뷰 dto 리스트
+     */
+    public List<ReviewListDTO> getMyStoresReviews(Long partnerId) {
+        return reviewRepository.findAllByPartnerId(partnerId)
+                .stream().map(ReviewListDTO::fromEntity)
+                .toList();
     }
 
     // 리뷰 id로 리뷰 가져오기
